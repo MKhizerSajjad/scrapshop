@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Contacts;
+use App\Models\Data;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ContactsExport implements FromCollection
@@ -12,9 +12,34 @@ class ContactsExport implements FromCollection
     */
     public function collection()
     {
-        return Contacts::all();
+        $data = Data::all();
 
-        // return Contacts::select("id", "name", "email")->get();
+        // Transform data to replace IDs with actual values
+        $transformedData = $data->map(function ($item) {
+            return [
+                'date' => $item->date,
+                'code' => $item->code,
+                'identifier' => $item->identifier,
+                'channel' => getPlatforms('social', $item->channel),
+                'call_type' => getGenStatus('general', $item->call_type),
+                'age_band' => getAgeBand('age', $item->age_band),
+                'gender' => getGenderStatus('gender', $item->gender),
+                'sexuality' => getGenderStatus('sexuality', $item->sexuality),
+                'diagnoses' => getIssues('diagnose', $item->diagnoses),
+                'triggers' => getIssues('trigger', $item->triggers),
+                'self_harm_method' => getIssues('self_harm', $item->self_harm_method),
+                'contact_type' => getIssues('contact_type', $item->contact_type),
+                'location' => getLocation('country', $item->location),
+                'service_awareness' => getPlatforms('service_awareness', $item->service_awareness),
+                'other_involved_services' => getGenStatus('bool', $item->other_involved_services),
+                'personal_situation' => getSituation('personal', $item->personal_situation),
+                'specific_issues' => getIssues('specific', $item->specific_issues),
+                'use_for' => getPlatforms('usage', $item->use_for),
+                'outcomes' => getPlatforms('outcomes', $item->outcomes),
+            ];
+        });
+
+        return $transformedData;
     }
 
     /**
@@ -25,44 +50,25 @@ class ContactsExport implements FromCollection
     public function headings(): array
     {
         return [
-            'date_time',
-            'exclude_date_time',
+            'date',
             'code',
-            'exclude_code',
             'identifier',
-            'exclude_identifier',
             'channel',
-            'exclude_channel',
             'call_type',
-            'exclude_call_type',
             'age_band',
-            'exclude_age_band',
             'gender',
-            'exclude_gender',
             'sexuality',
-            'exclude_sexuality',
             'diagnoses',
-            'exclude_diagnoses',
             'triggers',
-            'exclude_triggers',
             'self_harm_method',
-            'exclude_self_harm_method',
             'contact_type',
-            'exclude_contact_type',
             'location',
-            'exclude_location',
             'service_awareness',
-            'exclude_service_awareness',
             'other_involved_services',
-            'exclude_other_involved_services',
             'personal_situation',
-            'exclude_personal_situation',
             'specific_issues',
-            'exclude_specific_issues',
             'use_for',
-            'exclude_use_for',
             'outcomes',
-            'exclude_outcomes'
         ];
 
     }

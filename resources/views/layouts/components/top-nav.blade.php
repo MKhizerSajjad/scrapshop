@@ -18,7 +18,7 @@
                         <a class="nav-link dropdown-toggle arrow-none" href="{{route('data.index')}}" id="topnav-dashboard" role="button"
                         >
                             <i class="bx bx-user me-1"></i>
-                            <span key="t-aitool">Datadada</span>
+                            <span key="t-aitool">Data</span>
                         </a>
                     </li>
                 </ul>

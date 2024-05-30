@@ -20,7 +20,11 @@ use App\Http\Controllers\ContactsController;
 // });
 
 Auth::routes();
-
+Route::get('/register', function () {
+    return redirect()->route('login');
+});
+// Route::redirect()->route('register', 'login');
+// Route::redirect('/register', '/login');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

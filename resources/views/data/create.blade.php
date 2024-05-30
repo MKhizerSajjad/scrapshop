@@ -61,9 +61,9 @@
 
                                     <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label for="date_time">Date and Time</label>
-                                            <input id="date_time" name="date_time" type="datetime-local" class="form-control @error('date_time') is-invalid @enderror" value="{{ old('date_time') }}">
-                                            @error('date_time')
+                                            <label for="date">Date and Time</label>
+                                            <input id="date" name="date" type="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date', $currentDate) }}">
+                                            @error('date')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -71,17 +71,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    {{-- <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="code">Code</label>
-                                            <input id="code" name="code" type="text" class="form-control @error('code') is-invalid @enderror" placeholder="Code" value="{{ old('code') }}">
+                                            <input id="code" name="code" type="text" class="form-control @error('code') is-invalid @enderror" placeholder="Code" value="{{ old('code', $code) }}" readonly>
                                             @error('code')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-sm-4">
                                         <div class="mb-3">
@@ -180,8 +180,6 @@
                                         </div>
                                     </div>
 
-                                    <br>
-                                    MULTI SELECTS
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="diagnoses">Diagnoses / Self Identifying Labels</label>
@@ -232,9 +230,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <br> Multi Select End
-
 
                                     <div class="col-sm-6">
                                         <div class="mb-3">

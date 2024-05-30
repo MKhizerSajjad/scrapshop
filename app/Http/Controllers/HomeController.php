@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Data;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $data = Data::count();
-        return view('home', compact('data'));
+        $employees = User::where('user_type', 2)->count();
+        return view('home', compact('data', 'employees'));
     }
 }

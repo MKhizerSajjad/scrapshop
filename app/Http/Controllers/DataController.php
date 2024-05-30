@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Data;
 use Illuminate\Http\Request;
 use App\Exports\ContactsExport;
 use App\Imports\ContactsImport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class DataController extends Controller
 {
@@ -15,104 +18,92 @@ class DataController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Data::query();
+        $data = Data::with('employee');
 
         // Apply filters
         if ($request->filled('code')) {
-            $data->where('code', $request->input('code'));
+            $data->orWhere('code', 'LIKE', '%'.$request->input('code').'%');
+        }
+
+        if ($request->filled('from') && $request->filled('to')) {
+            $data->orWhereBetween('date', [$request->input('from'), $request->input('to')]);
+        } elseif ($request->filled('from')) {
+            $data->orWhere('date', '>=', $request->input('from'));
+        } elseif ($request->filled('to')) {
+            $data->orWhere('date', '<=', $request->input('to'));
         }
 
         if ($request->filled('identifier')) {
-            $data->where('identifier', 'like', '%' . $request->input('identifier') . '%');
+            $data->orWhere('identifier', 'like', '%' . $request->input('identifier') . '%');
+        }
+
+        if ($request->filled('employee')) {
+            $data->orWhereIn('employee_id', $request->input('employee'));
         }
 
         if ($request->filled('channel')) {
-            $data->whereIn('channel', $request->input('channel'));
+            $data->orWhereIn('channel', $request->input('channel'));
         }
 
         if ($request->filled('call_type')) {
-            $data->whereIn('call_type', $request->input('call_type'));
+            $data->orWhereIn('call_type', $request->input('call_type'));
         }
 
         if ($request->filled('age_band')) {
-            $data->whereIn('age_band', $request->input('age_band'));
+            $data->orWhereIn('age_band', $request->input('age_band'));
         }
 
         if ($request->filled('gender')) {
-            $data->whereIn('gender', $request->input('gender'));
+            $data->orWhereIn('gender', $request->input('gender'));
         }
 
         if ($request->filled('sexuality')) {
-            $data->whereIn('sexuality', $request->input('sexuality'));
+            $data->orWhereIn('sexuality', $request->input('sexuality'));
         }
 
         if ($request->filled('diagnoses')) {
-            $data->whereIn('diagnoses', $request->input('diagnoses'));
+            $data->orWhereIn('diagnoses', $request->input('diagnoses'));
         }
 
         if ($request->filled('triggers')) {
-            $data->whereIn('triggers', $request->input('triggers'));
+            $data->orWhereIn('triggers', $request->input('triggers'));
         }
 
         if ($request->filled('self_harm_method')) {
-            $data->whereIn('self_harm_method', $request->input('self_harm_method'));
+            $data->orWhereIn('self_harm_method', $request->input('self_harm_method'));
         }
 
         if ($request->filled('contact_type')) {
-            $data->whereIn('contact_type', $request->input('contact_type'));
+            $data->orWhereIn('contact_type', $request->input('contact_type'));
         }
 
         if ($request->filled('location')) {
-            $data->whereIn('location', $request->input('location'));
+            $data->orWhereIn('location', $request->input('location'));
         }
 
         if ($request->filled('service_awareness')) {
-            $data->whereIn('service_awareness', $request->input('service_awareness'));
+            $data->orWhereIn('service_awareness', $request->input('service_awareness'));
         }
 
         if ($request->filled('other_involved_services')) {
-            $data->whereIn('other_involved_services', $request->input('other_involved_services'));
+            $data->orWhereIn('other_involved_services', $request->input('other_involved_services'));
         }
 
         if ($request->filled('personal_situation')) {
-            $data->whereIn('personal_situation', $request->input('personal_situation'));
+            $data->orWhereIn('personal_situation', $request->input('personal_situation'));
         }
 
         if ($request->filled('specific_issues')) {
-            $data->whereIn('specific_issues', $request->input('specific_issues'));
+            $data->orWhereIn('specific_issues', $request->input('specific_issues'));
         }
 
         if ($request->filled('use_for')) {
-            $data->whereIn('use_for', $request->input('use_for'));
+            $data->orWhereIn('use_for', $request->input('use_for'));
         }
 
         if ($request->filled('outcomes')) {
-            $data->whereIn('outcomes', $request->input('outcomes'));
+            $data->orWhereIn('outcomes', $request->input('outcomes'));
         }
-
-        // // Apply filters dynamically
-        // $filters = $request->except('_token');
-        // foreach ($filters as $field => $value) {
-        //     // echo json_encode($value);
-        //     // if ($value !== null && $value !== '') {
-        //     // if ($request->filled($value)) {
-        //         // $value = $request->value($value);
-        //         // echo ($field .'----'. json_encode($value)) . '<br><br>';
-        //         echo '***<--'. $field .'-->';
-        //         if (is_array($value)) {
-        //             echo '<--'. $field .'-->' . json_encode($value);
-        //             $data->whereIn($field, $value);
-        //         } else {
-        //             // echo $value;
-        //             // Assuming 'identifier' field should use 'like' condition
-        //             if ($field == 'identifier') {
-        //                 $data->where($field, 'like', '%' . $value . '%');
-        //             } else {
-        //                 $data->where($field, $value);
-        //             }
-        //         }
-        //     // }
-        // }
 
         $data = $data->paginate(50);
 
@@ -125,7 +116,9 @@ class DataController extends Controller
      */
     public function create()
     {
-        return view('data.create');
+        $code = $this->generateInvoiceCode();
+        $currentDate = Carbon::now()->format('Y-m-d');
+        return view('data.create', compact('currentDate','code'));
     }
 
     /**
@@ -133,18 +126,21 @@ class DataController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'first_name' => 'required',
-        //     'title' => 'nullable',
-        //     'email' => 'nullable|email',
-        //     'mobile_phone' => 'nullable',
+        // $request->validate([
+        //     'date' => 'required|dateadad',
+        //     // 'first_name' => 'required',
+        //     // 'title' => 'nullable',
+        //     // 'email' => 'nullable|email',
+        //     // 'mobile_phone' => 'nullable',
         // ]);
 
+        $code = $this->generateInvoiceCode();
 
         $data = [
+            'employee_id' => Auth::user()->id,
             'status' => isset($request->status) ? $request->status : 1,
-            'date_time' => $request->date_time,
-            'code' => $request->code,
+            'date' => $request->date,
+            'code' => $code,
             'identifier' => $request->identifier,
             'channel' => $request->channel,
             'call_type' => $request->call_type,
@@ -167,7 +163,7 @@ class DataController extends Controller
 
         Data::create($data);
 
-        return redirect()->route('data.create')->with('success','Record created successfully');
+        return redirect()->route('data.index')->with('success','Record created successfully');
     }
 
     /**
@@ -295,5 +291,24 @@ class DataController extends Controller
         Excel::import(new ContactsImport, $file);
 
         return back()->with('success','Contacts imported successfully');
+    }
+
+    public function generateInvoiceCode() {
+        // Get current date in 'YYYYMMDD' format
+        $date = Carbon::now();
+        $todayDate = Carbon::now()->format('Y-m-d');
+        $code = Carbon::now()->format('Ymd');
+
+        // // Fetch the maximum existing code for today
+        // $maxCode = DB::table('data')
+        //     ->whereDate('date', $todayDate)
+        //     ->where('code', 'LIKE', $code.'%')
+        //     ->max(DB::raw("CAST(SUBSTRING(code, 9, 5) AS UNSIGNED)"));
+        // // dd($date);
+
+        $todaysCount = Data::where('date', $todayDate)->count();
+        // Increment the max code number by 1, if null set it to 1
+        return $code. str_pad(++$todaysCount, 5, '0', STR_PAD_LEFT);
+
     }
 }

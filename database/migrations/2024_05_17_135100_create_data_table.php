@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('data', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('employee_id')->nullable();
             $table->tinyInteger('status');
-            $table->dateTime('date_time');
-            $table->string('code', 255);
+            $table->date('date');
+            $table->bigInteger('code');
             $table->string('identifier', 255);
             $table->tinyInteger('channel');
             $table->tinyInteger('call_type');
@@ -35,6 +36,8 @@ return new class extends Migration
             $table->tinyInteger('outcomes');
             $table->longText('note');
             $table->timestamps();
+
+            $table->foreign('employee_id')->references('id')->on('users')->onDelete('CASCADE');
         });
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+    use App\Models\User;
+
     function statusReturn($prefix, $statuses, $status = null, $type = null)
     {
 
@@ -13,6 +15,10 @@
         } else {
             return ''; // Or handle the case when $prefix is not found in $statuses
         }
+    }
+
+    function getEmployee(){
+        return User::select('id', 'first_name', 'last_name')->get();
     }
 
     function getGenStatus($prefix, $status = null, $type = null)

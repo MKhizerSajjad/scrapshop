@@ -76,6 +76,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Employees Count</p>
+                                            <h4 class="mb-0">{{$employees}}</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                <span class="avatar-title">
+                                                    <i class="bx bx-user font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- end row -->

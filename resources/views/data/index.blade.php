@@ -74,13 +74,34 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="name" class="mb-0">Date Range</label>
+
+                                    <p class="card-title-desc font-size-10 mb-0">
+                                        <code><b>From Date</b></code>
+                                    </p>
+                                    <input type="date" name="from" class="form-control" value="{{ request()->input('from') }}">
+                                    <p class="card-title-desc font-size-10 mb-0">
+                                        <code><b>To Date</b></code>
+                                    </p>
+                                    <input type="date" name="to" class="form-control" value="{{ request()->input('to') }}">
+                                </div>
+
                                 <label for="code" class="mt-0 mb-0">Code</label>
                                 <input type="code" name="code" class="form-control" value="{{ request()->input('code') }}"><br>
 
                                 <label for="identifier" class="mt-0 mb-0">Identifier</label>
                                 <input type="text" name="identifier" class="form-control" value="{{ request()->input('identifier') }}"><br>
 
-                                <label for="channel" class="mt-2 mb-0">Channel</label>
+                                <label for="employee" class="mt-2 mb-0">Employee</label>
+                                <select id="employee" name="employee[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple">
+                                    <option>Select Employee</option>
+                                    @foreach (getEmployee() as $key => $employee)
+                                        <option value="{{ $employee->id }}" @if(in_array($key, request()->input('employee', []))) selected @endif>{{ $employee->first_name .' '. $employee->last_name }}</option>
+                                    @endforeach
+                                </select>
+
+                                <label for="channel" class="mt-3 mb-0">Channel</label>
                                 <select id="channel" name="channel[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple">
                                     <option>Select Channel</option>
                                     @foreach (getPlatforms('social') as $key => $platform)
@@ -231,6 +252,7 @@
                                                             <th>Gender</th>
                                                             <th>Sexuality</th>
                                                             <th>User For</th>
+                                                            <th>Employee</th>
                                                             <th>Location</th>
                                                             <th class="text-center">Options</th>
                                                         </tr>
@@ -245,6 +267,7 @@
                                                                 <td>{{ getGenderStatus('gender', $contact->gender) }}</td>
                                                                 <td>{{ getGenderStatus('sexuality', $contact->sexuality) }}</td>
                                                                 <td>{{ getPlatforms('usage', $contact->use_for) }}</td>
+                                                                <td>{{ $contact->employee->first_name }}</td>
                                                                 <td>{{ getLocation('country', $contact->location) }}</td>
                                                                 <td class="text-center">
                                                                     {{-- <a href="{{ route('data.edit', $contact->id) }}"><i class="bx bx-pencil"></i></a> --}}
@@ -265,13 +288,84 @@
                                                                         <div class="modal-body">
                                                                             <div class="row">
                                                                                 <div class="col-md-6">
-                                                                                    <label for="code">Code</label>
-                                                                                    <input type="text" id="code" name="code" class="form-control" value="{{ $contact->code }}" disabled>
+                                                                                    <label for="date">Date</label>
+                                                                                    <input type="date" id="date" name="date" class="form-control" value="{{ $contact->date }}" disabled>
                                                                                 </div>
-
+                                                                                <div class="col-md-6">
+                                                                                    <label for="code">Code</label>
+                                                                                    <input type="number" id="code" name="code" class="form-control" value="{{ $contact->code }}" disabled>
+                                                                                </div>
                                                                                 <div class="col-md-6">
                                                                                     <label for="identifier">Identifier</label>
                                                                                     <input type="text" id="identifier" name="identifier" class="form-control" value="{{ $contact->identifier }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="channel">Channel</label>
+                                                                                    <input type="text" id="channel" name="channel" class="form-control" value="{{ getPlatforms('social', $contact->channel) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="call_type">Call Type</label>
+                                                                                    <input type="text" id="call_type" name="call_type" class="form-control" value="{{ getGenStatus('general', $contact->call_type) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="age_band">Age Band</label>
+                                                                                    <input type="text" id="age_band" name="age_band" class="form-control" value="{{ getAgeBand('age', $contact->age_band) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="gender">Gender</label>
+                                                                                    <input type="text" id="gender" name="gender" class="form-control" value="{{ getGenderStatus('gender', $contact->gender) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="sexuality">Sexuality</label>
+                                                                                    <input type="text" id="sexuality" name="sexuality" class="form-control" value="{{ getGenderStatus('sexuality', $contact->sexuality) }}" disabled>
+                                                                                </div>
+                                                                                {{-- <div class="col-md-6">
+                                                                                    <label for="diagnoses">Diagnoses </label>
+                                                                                    <input type="text" id="diagnoses" name="diagnoses" class="form-control" value="{{ getIssues('diagnoses', $contact->diagnoses) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="triggers">Triggers</label>
+                                                                                    <input type="text" id="triggers" name="triggers" class="form-control" value="{{ getIssues('triggers', $contact->triggers) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="self_harm_method">Self Harm Method</label>
+                                                                                    <input type="text" id="self_harm_method" name="self_harm_method" class="form-control" value="{{ getIssues('self_harm_method', $contact->self_harm_method) }}" disabled>
+                                                                                </div> --}}
+                                                                                <div class="col-md-6">
+                                                                                    <label for="contact_type">Contact Type</label>
+                                                                                    <input type="text" id="contact_type" name="contact_type" class="form-control" value="{{ getIssues('contact_type', $contact->contact_type) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="location">Location</label>
+                                                                                    <input type="text" id="location" name="location" class="form-control" value="{{ getLocation('country', $contact->location) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="service_awareness">Service Awareness</label>
+                                                                                    <input type="text" id="service_awareness" name="service_awareness" class="form-control" value="{{ getPlatforms('service_awareness', $contact->service_awareness) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="other_involved_services">Other Involved Services</label>
+                                                                                    <input type="text" id="other_involved_services" name="other_involved_services" class="form-control" value="{{ getGenStatus('bool', $contact->other_involved_services)}}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="personal_situation">Personal Situation</label>
+                                                                                    <input type="text" id="personal_situation" name="personal_situation" class="form-control" value="{{ getSituation('personal', $contact->personal_situation) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="specific_issues">Specific Issues</label>
+                                                                                    <input type="text" id="specific_issues" name="specific_issues" class="form-control" value="{{ getIssues('specific', $contact->specific_issues) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="use_for">Use For</label>
+                                                                                    <input type="text" id="use_for" name="use_for" class="form-control" value="{{ getPlatforms('usage', $contact->use_for) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="outcomes">Outcomes</label>
+                                                                                    <input type="text" id="outcomes" name="outcomes" class="form-control" value="{{ getPlatforms('outcomes', $contact->outcomes) }}" disabled>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <label for="note">Note</label>
+                                                                                    <textarea id="note" name="note" class="form-control" disabled>{{ $contact->note }}</textarea>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -289,326 +383,6 @@
                                             </div>
                                         </p>
                                     </div>
-                                    {{-- <div class="tab-pane" id="person" role="tabpanel">
-                                        <p class="mb-0">
-                                            <div class="table-responsive" bis_skin_checked="1">
-                                                <table class="table mb-0 table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center">#</th>
-                                                            <th>Name</th>
-                                                            <th>Title</th>
-                                                            <th>Company</th>
-                                                            <th>Email</th>
-                                                            <th>Mobile</th>
-                                                            <th>Employees</th>
-                                                            <th>Revenue</th>
-                                                            <th>Address</th>
-                                                            <th class="text-center">Options</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($data as $key => $contact)
-                                                            <tr>
-                                                                <td  class="text-center">{{ ++$key }}</td>
-                                                                <td>{{ $contact->first_name .' '. $contact->last_name }}</td>
-                                                                <td>{{ $contact->title }}</td>
-                                                                <td>{{ $contact->company }}</td>
-                                                                <td>{{ $contact->email }}</td>
-                                                                <td>{{ $contact->mobile_phone }}</td>
-                                                                <td>{{ $contact->employees }}</td>
-                                                                <td>{{ $contact->annual_revenue }}</td>
-                                                                <td>{{ $contact->state .', '. $contact->country }}</td>
-                                                                <td class="text-center">
-                                                                    <a href="#" class="detail-modal-btn" data-toggle="modal" data-target="#detailModal{{ $contact->id }}"><i class="bx bx-info-circle"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <div class="modal fade" id="detailModal{{ $contact->id }}" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 50%;">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="detailModalLabel">Contact Details</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <label for="first_name">First Name:</label>
-                                                                                    <input type="text" id="first_name" name="first_name" class="form-control" value="{{ $contact->first_name }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="last_name">Last Name:</label>
-                                                                                    <input type="text" id="last_name" name="last_name" class="form-control" value="{{ $contact->last_name }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="title">Title:</label>
-                                                                                    <input type="text" id="title" name="title" class="form-control" value="{{ $contact->title }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company">Company:</label>
-                                                                                    <input type="text" id="company" name="company" class="form-control" value="{{ $contact->company }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_name_for_emails">Company Name for Emails:</label>
-                                                                                    <input type="text" id="company_name_for_emails" name="company_name_for_emails" class="form-control" value="{{ $contact->company_name_for_emails }}" disabled>
-                                                                                </div><div class="col-md-6">
-                                                                                    <label for="email">Email:</label>
-                                                                                    <input type="text" id="email" name="email" class="form-control" value="{{ $contact->email }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="email_status">Email Status:</label>
-                                                                                    <input type="text" id="email_status" name="email_status" class="form-control" value="{{ $contact->email_status }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="email_confidence">Email Confidence:</label>
-                                                                                    <input type="text" id="email_confidence" name="email_confidence" class="form-control" value="{{ $contact->email_confidence }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="seniority">Seniority:</label>
-                                                                                    <input type="text" id="seniority" name="seniority" class="form-control" value="{{ $contact->seniority }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="departments">Departments:</label>
-                                                                                    <input type="text" id="departments" name="departments" class="form-control" value="{{ $contact->departments }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="contact_owner">Contact Owner:</label>
-                                                                                    <input type="text" id="contact_owner" name="contact_owner" class="form-control" value="{{ $contact->contact_owner }}" disabled>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <label for="first_phone">First Phone:</label>
-                                                                                    <input type="text" id="first_phone" name="first_phone" class="form-control" value="{{ $contact->first_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="work_direct_phone">Work Direct Phone:</label>
-                                                                                    <input type="text" id="work_direct_phone" name="work_direct_phone" class="form-control" value="{{ $contact->work_direct_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="home_phone">Home Phone:</label>
-                                                                                    <input type="text" id="home_phone" name="home_phone" class="form-control" value="{{ $contact->home_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="mobile_phone">Mobile Phone:</label>
-                                                                                    <input type="text" id="mobile_phone" name="mobile_phone" class="form-control" value="{{ $contact->mobile_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="corporate_phone">Corporate Phone:</label>
-                                                                                    <input type="text" id="corporate_phone" name="corporate_phone" class="form-control" value="{{ $contact->corporate_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="other_phone">Other Phone:</label>
-                                                                                    <input type="text" id="other_phone" name="other_phone" class="form-control" value="{{ $contact->other_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="stage">Stage:</label>
-                                                                                    <input type="text" id="stage" name="stage" class="form-control" value="{{ $contact->stage }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="lists">Lists:</label>
-                                                                                    <input type="text" id="lists" name="lists" class="form-control" value="{{ $contact->lists }}" disabled>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <label for="last_contacted">Last Contacted:</label>
-                                                                                    <input type="text" id="last_contacted" name="last_contacted" class="form-control" value="{{ $contact->last_contacted }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="account_owner">Account Owner:</label>
-                                                                                    <input type="text" id="account_owner" name="account_owner" class="form-control" value="{{ $contact->account_owner }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="employees">Employees:</label>
-                                                                                    <input type="text" id="employees" name="employees" class="form-control" value="{{ $contact->employees }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="industry">Industry:</label>
-                                                                                    <input type="text" id="industry" name="industry" class="form-control" value="{{ $contact->industry }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="keywords">Keywords:</label>
-                                                                                    <input type="text" id="keywords" name="keywords" class="form-control" value="{{ $contact->keywords }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="person_linkedin">Person LinkedIn:</label>
-                                                                                    <input type="text" id="person_linkedin" name="person_linkedin" class="form-control" value="{{ $contact->person_linkedin }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="url">URL:</label>
-                                                                                    <input type="text" id="url" name="url" class="form-control" value="{{ $contact->url }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="website">Website:</label>
-                                                                                    <input type="text" id="website" name="website" class="form-control" value="{{ $contact->website }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_linkedin_url">Company LinkedIn URL:</label>
-                                                                                    <input type="text" id="company_linkedin_url" name="company_linkedin_url" class="form-control" value="{{ $contact->company_linkedin_url }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="facebook_url">Facebook URL:</label>
-                                                                                    <input type="text" id="facebook_url" name="facebook_url" class="form-control" value="{{ $contact->facebook_url }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="twitter_url">Twitter URL:</label>
-                                                                                    <input type="text" id="twitter_url" name="twitter_url" class="form-control" value="{{ $contact->twitter_url }}" disabled>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <label for="city">City:</label>
-                                                                                    <input type="text" id="city" name="city" class="form-control" value="{{ $contact->city }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="state">State:</label>
-                                                                                    <input type="text" id="state" name="state" class="form-control" value="{{ $contact->state }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="country">Country:</label>
-                                                                                    <input type="text" id="country" name="country" class="form-control" value="{{ $contact->country }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_address">Company Address:</label>
-                                                                                    <input type="text" id="company_address" name="company_address" class="form-control" value="{{ $contact->company_address }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_city">Company City:</label>
-                                                                                    <input type="text" id="company_city" name="company_city" class="form-control" value="{{ $contact->company_city }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_state">Company State:</label>
-                                                                                    <input type="text" id="company_state" name="company_state" class="form-control" value="{{ $contact->company_state }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_country">Company Country:</label>
-                                                                                    <input type="text" id="company_country" name="company_country" class="form-control" value="{{ $contact->company_country }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="company_phone">Company Phone:</label>
-                                                                                    <input type="text" id="company_phone" name="company_phone" class="form-control" value="{{ $contact->company_phone }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="seo_description">SEO Description:</label>
-                                                                                    <input type="text" id="seo_description" name="seo_description" class="form-control" value="{{ $contact->seo_description }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="technologies">Technologies:</label>
-                                                                                    <input type="text" id="technologies" name="technologies" class="form-control" value="{{ $contact->technologies }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="annual_revenue">Annual Revenue:</label>
-                                                                                    <input type="text" id="annual_revenue" name="annual_revenue" class="form-control" value="{{ $contact->annual_revenue }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="total_funding">Total Funding:</label>
-                                                                                    <input type="text" id="total_funding" name="total_funding" class="form-control" value="{{ $contact->total_funding }}" disabled>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <label for="latest_funding">Latest Funding:</label>
-                                                                                    <input type="text" id="latest_funding" name="latest_funding" class="form-control" value="{{ $contact->latest_funding }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="latest_funding_amount">Latest Funding Amount:</label>
-                                                                                    <input type="text" id="latest_funding_amount" name="latest_funding_amount" class="form-control" value="{{ $contact->latest_funding_amount }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="last_raised_at">Last Raised At:</label>
-                                                                                    <input type="text" id="last_raised_at" name="last_raised_at" class="form-control" value="{{ $contact->last_raised_at }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="email_sent">Email Sent:</label>
-                                                                                    <input type="text" id="email_sent" name="email_sent" class="form-control" value="{{ $contact->email_sent }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="email_open">Email Open:</label>
-                                                                                    <input type="text" id="email_open" name="email_open" class="form-control" value="{{ $contact->email_open }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="email_bounced">Email Bounced:</label>
-                                                                                    <input type="text" id="email_bounced" name="email_bounced" class="form-control" value="{{ $contact->email_bounced }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="replied">Replied:</label>
-                                                                                    <input type="text" id="replied" name="replied" class="form-control" value="{{ $contact->replied }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="demoed">Demoed:</label>
-                                                                                    <input type="text" id="demoed" name="demoed" class="form-control" value="{{ $contact->demoed }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="number_of_retail_locations">Number of Retail Locations:</label>
-                                                                                    <input type="text" id="number_of_retail_locations" name="number_of_retail_locations" class="form-control" value="{{ $contact->number_of_retail_locations }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="apollo_contact_id">Apollo Contact ID:</label>
-                                                                                    <input type="text" id="apollo_contact_id" name="apollo_contact_id" class="form-control" value="{{ $contact->apollo_contact_id }}" disabled>
-                                                                                </div>
-
-                                                                                <div class="col-md-6">
-                                                                                    <label for="apollo_account_id">Apollo Account ID:</label>
-                                                                                    <input type="text" id="apollo_account_id" name="apollo_account_id" class="form-control" value="{{ $contact->apollo_account_id }}" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                {{ $data->links() }}
-                                            </div>
-                                        </p>
-                                    </div> --}}
                                 </div>
                             @else
                                 <div class="noresult">
