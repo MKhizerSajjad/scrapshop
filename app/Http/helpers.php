@@ -64,7 +64,8 @@
                 '2' => ['A Distraction', '<span class="badge bg-warning-light">A Distraction</span>'],
                 '3' => ['To Offload', '<span class="badge bg-success-light">To Offload</span>'],
                 '4' => ['To Find Support', '<span class="badge bg-info-light">To Find Support</span>'],
-                '5' => ['Cry For Help', '<span class="badge bg-danger-light">Cry For Help</span>']
+                '5' => ['Cry For Help', '<span class="badge bg-danger-light">Cry For Help</span>'],
+                '6' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
             ],
             'service_awareness' => [
                 '1' => ['Internet Search', '<span class="badge bg-primary-light">Internet Search</span>'],
@@ -90,7 +91,8 @@
                 '10' => ['Signposted To Rightlines Services', '<span class="badge bg-warning">Signposted To Rightlines Services</span>'],
                 '11' => ['Thanks To Rightlines "I Don’t Need To Message Now"', '<span class="badge bg-success">Thanks To Rightlines "I Don’t Need To Message Now"</span>'],
                 '12' => ['Understanding & Support Provided', '<span class="badge bg-info">Understanding & Support Provided</span>'],
-                '13' => ['YP Offers Involvement With Rightlines Eg Poem, Post, Story', '<span class="badge bg-danger">YP Offers Involvement With Rightlines Eg Poem, Post, Story</span>']
+                '13' => ['YP Offers Involvement With Rightlines Eg Poem, Post, Story', '<span class="badge bg-danger">YP Offers Involvement With Rightlines Eg Poem, Post, Story</span>'],
+                '14' => ['N/A', '<span class="badge bg-light">N/A</span>'],
             ]
         ];
 
@@ -166,7 +168,8 @@
                 '5' => ['Own Negative Feelings', '<span class="badge bg-danger-light">Own Negative Feelings</span>'],
                 '6' => ['Problems With Peers', '<span class="badge bg-secondary-light">Problems With Peers</span>'],
                 '7' => ['Social Media', '<span class="badge bg-dark-light">Social Media</span>'],
-                '8' => ['Other', '<span class="badge bg-light">Other</span>']
+                '8' => ['Other', '<span class="badge bg-light">Other</span>'],
+                '9' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
             ],
             'specific' => [
                 '1' => ['Education Work Or Training', '<span class="badge bg-primary-light">Education Work Or Training</span>'],
@@ -175,7 +178,8 @@
                 '4' => ['Abuse', '<span class="badge bg-info-light">Abuse</span>'],
                 '5' => ['Relationship Issues - Friends / Partners', '<span class="badge bg-danger-light">Relationship Issues - Friends / Partners</span>'],
                 '6' => ['Homelessness / Housing Issues', '<span class="badge bg-secondary-light">Homelessness / Housing Issues</span>'],
-                '7' => ['Physical Health', '<span class="badge bg-dark-light">Physical Health</span>']
+                '7' => ['Physical Health', '<span class="badge bg-dark-light">Physical Health</span>'],
+                '8' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
             ],
             'self_harm' => [
                 '1' => ['Attempts to End Life', '<span class="badge bg-primary-light">Attempts to End Life</span>'],
@@ -229,7 +233,8 @@ function getSituation($prefix, $status = null, $type = null)
             '5' => ['Lack Of Support - Family', '<span class="badge bg-danger-light">Lack Of Support - Family</span>'],
             '6' => ['Lack Of Support - Peers', '<span class="badge bg-secondary-light">Lack Of Support - Peers</span>'],
             '7' => ['Lack Of Support - Formal Services', '<span class="badge bg-dark-light">Lack Of Support - Formal Services</span>'],
-            '8' => ['In Crisis', '<span class="badge bg-light">In Crisis</span>']
+            '8' => ['In Crisis', '<span class="badge bg-light">In Crisis</span>'],
+            '9' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
         ]
     ];
 
