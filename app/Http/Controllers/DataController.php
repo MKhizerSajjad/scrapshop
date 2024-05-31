@@ -126,13 +126,26 @@ class DataController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'date' => 'required|dateadad',
-        //     // 'first_name' => 'required',
-        //     // 'title' => 'nullable',
-        //     // 'email' => 'nullable|email',
-        //     // 'mobile_phone' => 'nullable',
-        // ]);
+        $request->validate([
+            'date' => 'required|date',
+            'identifier' => 'required',
+            'channel' => 'required',
+            'call_type' => 'required',
+            'age_band' => 'required',
+            'gender' => 'required',
+            'sexuality' => 'required',
+            'diagnoses' => 'required',
+            'triggers' => 'required',
+            'self_harm_method' => 'required',
+            'contact_type' => 'required',
+            'location' => 'required',
+            'service_awareness' => 'required',
+            'other_involved_services' => 'required',
+            'personal_situation' => 'required',
+            'specific_issues' => 'required',
+            'use_for' => 'required',
+            'outcomes' => 'required',
+        ]);
 
         $code = $this->generateInvoiceCode();
 

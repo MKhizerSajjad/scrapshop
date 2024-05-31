@@ -45,7 +45,7 @@
                                         <div class="mb-3">
                                             <label for="status">Email Sent</label>
                                             <select id="email_sent" name="email_sent" class="form-control @error('email_sent') is-invalid @enderror" >
-                                                <option>Select Cat</option>
+                                                <option value="">Select Cat</option>
                                                 @foreach (getGenStatus('general') as $key => $cat)
                                                     <option value="{{ ++$key }}">{{ $cat }}</option>
                                                 @endforeach
@@ -59,7 +59,7 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="date">Date and Time</label>
                                             <input id="date" name="date" type="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date', $currentDate) }}">
@@ -71,7 +71,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-sm-4">
+                                    {{-- <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="code">Code</label>
                                             <input id="code" name="code" type="text" class="form-control @error('code') is-invalid @enderror" placeholder="Code" value="{{ old('code', $code) }}" readonly>
@@ -83,7 +83,7 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="identifier">Identifier</label>
                                             <input id="identifier" name="identifier" type="text" class="form-control @error('identifier') is-invalid @enderror" placeholder="Identifier" value="{{ old('identifier') }}">
@@ -99,7 +99,7 @@
                                         <div class="mb-3">
                                             <label for="channel">Channel</label>
                                             <select id="channel" name="channel" class="form-control @error('channel') is-invalid @enderror"  data-placeholder="Select" >
-                                                <option>Select Channel</option>
+                                                <option value="">Select Channel</option>
                                                 @foreach (getPlatforms('social') as $key => $platform)
                                                     <option value="{{ ++$key }}">{{ $platform }}</option>
                                                 @endforeach
@@ -116,7 +116,7 @@
                                         <div class="mb-3">
                                             <label for="call_type">Call Type</label>
                                             <select id="call_type" name="call_type" class="form-control @error('call_type') is-invalid @enderror"  data-placeholder="Select" >
-                                                <option>Select Call Type</option>
+                                                <option value="">Select Call Type</option>
                                                 @foreach (getGenStatus('general') as $key => $cat)
                                                     <option value="{{ ++$key }}">{{ $cat }}</option>
                                                 @endforeach
@@ -133,7 +133,7 @@
                                         <div class="mb-3">
                                             <label for="age_band">Age Band</label>
                                             <select id="age_band" name="age_band" class="form-control @error('age_band') is-invalid @enderror"  data-placeholder="Select" >
-                                                <option>Select Call Type</option>
+                                                <option value="">Select Call Type</option>
                                                 @foreach (getAgeBand('age') as $key => $cat)
                                                     <option value="{{ ++$key }}">{{ $cat }}</option>
                                                 @endforeach
@@ -150,7 +150,7 @@
                                         <div class="mb-3">
                                             <label for="gender">Gender</label>
                                              <select id="gender" name="gender" class="form-control @error('gender') is-invalid @enderror"  data-placeholder="Select" >
-                                                <option>Select Gender</option>
+                                                <option value="">Select Gender</option>
                                                 @foreach (getGenderStatus('gender') as $key => $cat)
                                                     <option value="{{ ++$key }}">{{ $cat }}</option>
                                                 @endforeach
@@ -167,7 +167,7 @@
                                         <div class="mb-3">
                                             <label for="sexuality">Sexuality</label>
                                             <select id="sexuality" name="sexuality" class="form-control @error('sexuality') is-invalid @enderror"  data-placeholder="Select" >
-                                               <option>Select Sexuality</option>
+                                               <option value="">Select Sexuality</option>
                                                @foreach (getGenderStatus('sexuality') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -183,8 +183,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="diagnoses">Diagnoses / Self Identifying Labels</label>
-                                            <select id="diagnoses" name="diagnoses[]" class="select2 form-control select2-multiple @error('diagnoses') is-invalid @enderror"  data-placeholder="Select" multiple="multiple">
-                                               <option>Select Diagnoses / Self Identifying Labels</option>
+                                            <select id="diagnoses" name="diagnoses[]" class="select2 form-control select2-multiple @error('diagnoses') is-invalid @enderror"  data-placeholder="Select  Diagnoses / Self Identifying Labels" multiple="multiple">
                                                @foreach (getIssues('diagnose') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -200,8 +199,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="triggers">Triggers</label>
-                                            <select id="triggers" name="triggers[]" class="select2 form-control select2-multiple @error('triggers') is-invalid @enderror"  data-placeholder="Select" multiple="multiple">
-                                               <option>Select Triggers</option>
+                                            <select id="triggers" name="triggers[]" class="select2 form-control select2-multiple @error('triggers') is-invalid @enderror"  data-placeholder="Select Trigger" multiple="multiple">
                                                @foreach (getIssues('trigger') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -217,8 +215,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="self_harm_method">Self Harm Method</label>
-                                            <select id="self_harm_method" name="self_harm_method[]" class="select2 form-control select2-multiple @error('self_harm_method') is-invalid @enderror"  data-placeholder="Select" multiple="multiple">
-                                               <option>Select Self Harm Method</option>
+                                            <select id="self_harm_method" name="self_harm_method[]" class="select2 form-control select2-multiple @error('self_harm_method') is-invalid @enderror"  data-placeholder="Select Harm Method" multiple="multiple">
                                                @foreach (getIssues('self_harm') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -235,7 +232,7 @@
                                         <div class="mb-3">
                                             <label for="contact_type">Contact Type</label>
                                             <select id="contact_type" name="contact_type" class="form-control @error('contact_type') is-invalid @enderror">
-                                               <option>Select Contact Type</option>
+                                               <option value="">Select Contact Type</option>
                                                @foreach (getIssues('contact_type') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -252,7 +249,7 @@
                                         <div class="mb-3">
                                             <label for="location">Location</label>
                                             <select id="location" name="location" class="form-control @error('location') is-invalid @enderror">
-                                               <option>Select Location</option>
+                                               <option value="">Select Location</option>
                                                @foreach (getLocation('country') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -268,7 +265,7 @@
                                         <div class="mb-3">
                                             <label for="service_awareness">Service Awareness</label>
                                             <select id="service_awareness" name="service_awareness" class="form-control @error('service_awareness') is-invalid @enderror">
-                                               <option>Select Service Awareness</option>
+                                               <option value="">Select Service Awareness</option>
                                                @foreach (getPlatforms('service_awareness') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -284,7 +281,7 @@
                                         <div class="mb-3">
                                             <label for="other_involved_services">Other Involved Service</label>
                                             <select id="other_involved_services" name="other_involved_services" class="form-control @error('other_involved_services') is-invalid @enderror">
-                                               <option>Select Othe Involved Service</option>
+                                               <option value="">Select Othe Involved Service</option>
                                                @foreach (getGenStatus('bool') as $key => $cat)
                                                    <option value="{{ ++$key }}">{{ $cat }}</option>
                                                @endforeach
@@ -300,7 +297,7 @@
                                         <div class="mb-3">
                                             <label for=">personal_situation">Personal Situtaion</label>
                                             <select id=">personal_situation" name="personal_situation" class="form-control @error('personal_situation') is-invalid @enderror">
-                                               <option>Select Personal Situtaion</option>
+                                               <option value="">Select Personal Situtaion</option>
                                                @foreach (getSituation('personal') as $key => $value)
                                                    <option value="{{ ++$key }}">{{ $value }}</option>
                                                @endforeach
@@ -316,6 +313,7 @@
                                         <div class="mb-3">
                                             <label for=">specific_issues">Specific Issues</label>
                                             <select id=">specific_issues" name="specific_issues" class="form-control @error('specific_issues') is-invalid @enderror">
+                                                <option value="">Select Specific Issue </option>
                                                @foreach (getIssues('specific') as $key => $value)
                                                    <option value="{{ ++$key }}">{{ $value }}</option>
                                                @endforeach
@@ -331,7 +329,7 @@
                                         <div class="mb-3">
                                             <label for=">use_for">Use For</label>
                                             <select id=">use_for" name="use_for" class="form-control @error('use_for') is-invalid @enderror">
-                                                <option>Select Use For </option>
+                                                <option value="">Select Use For </option>
                                                 @foreach (getPlatforms('usage') as $key => $value)
                                                    <option value="{{ ++$key }}">{{ $value }}</option>
                                                @endforeach
@@ -347,7 +345,7 @@
                                         <div class="mb-3">
                                             <label for=">outcomes">Outcome</label>
                                             <select id=">outcomes" name="outcomes" class="form-control @error('outcomes') is-invalid @enderror">
-                                                <option>Select Outcome </option>
+                                                <option value="">Select Outcome </option>
                                                 @foreach (getPlatforms('outcomes') as $key => $value)
                                                     <option value="{{ ++$key }}">{{ $value }}</option>
                                                 @endforeach
