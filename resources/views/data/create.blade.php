@@ -61,7 +61,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="mb-3">
-                                            <label for="date">Date and Time</label>
+                                            <label for="date">Date</label>
                                             <input id="date" name="date" type="date" class="form-control @error('date') is-invalid @enderror" value="{{ old('date', $currentDate) }}">
                                             @error('date')
                                                 <span class="invalid-feedback" role="alert">

@@ -27,6 +27,7 @@ Route::get('/register', function () {
 // Route::redirect('/register', '/login');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
     Route::resource('data', DataController::class)->names('data');
     Route::resource('contacts', ContactsController::class)->names('contacts');

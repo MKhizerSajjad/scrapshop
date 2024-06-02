@@ -160,17 +160,17 @@ class DataController extends Controller
             'age_band' => $request->age_band,
             'gender' => $request->gender,
             'sexuality' => $request->sexuality,
-            'diagnoses' => implode(', ', $request->diagnoses),
-            'triggers' => implode(', ', $request->triggers),
-            'self_harm_method' => implode(', ', $request->self_harm_method),
+            'diagnoses' => implode(',', $request->diagnoses),
+            'triggers' => implode(',', $request->triggers),
+            'self_harm_method' => implode(',', $request->self_harm_method),
             'contact_type' => $request->contact_type,
             'location' => $request->location,
             'service_awareness' => $request->service_awareness,
             'other_involved_services' => $request->other_involved_services,
-            'personal_situation' => implode(', ', $request->personal_situation),
-            'specific_issues' => implode(', ', $request->specific_issues),
-            'use_for' => implode(', ', $request->use_for),
-            'outcomes' => implode(', ', $request->outcomes),
+            'personal_situation' => implode(',', $request->personal_situation),
+            'specific_issues' => implode(',', $request->specific_issues),
+            'use_for' => implode(',', $request->use_for),
+            'outcomes' => implode(',', $request->outcomes),
             'note' => $request->note
         ];
 
@@ -307,21 +307,9 @@ class DataController extends Controller
     }
 
     public function generateInvoiceCode() {
-        // Get current date in 'YYYYMMDD' format
-        $date = Carbon::now();
-        $todayDate = Carbon::now()->format('Y-m-d');
         $code = Carbon::now()->format('Ymd');
-
-        // // Fetch the maximum existing code for today
-        // $maxCode = DB::table('data')
-        //     ->whereDate('date', $todayDate)
-        //     ->where('code', 'LIKE', $code.'%')
-        //     ->max(DB::raw("CAST(SUBSTRING(code, 9, 5) AS UNSIGNED)"));
-        // // dd($date);
-
-        $todaysCount = Data::where('date', $todayDate)->count();
+        $todaysCount = Data::where('code', 'LIKE', $code.'%')->count();
         // Increment the max code number by 1, if null set it to 1
         return $code. str_pad(++$todaysCount, 5, '0', STR_PAD_LEFT);
-
     }
 }

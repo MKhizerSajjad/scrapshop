@@ -97,7 +97,7 @@
                                 <select id="employee" name="employee[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple">
                                     <option>Select Employee</option>
                                     @foreach (getEmployee() as $key => $employee)
-                                        <option value="{{ $employee->id }}" @if(in_array($key, request()->input('employee', []))) selected @endif>{{ $employee->first_name .' '. $employee->last_name }}</option>
+                                        <option value="{{ ++$key }}" @if(in_array($key, request()->input('employee', []))) selected @endif>{{ $employee->first_name .' '. $employee->last_name }}</option>
                                     @endforeach
                                 </select>
 
@@ -250,6 +250,7 @@
                                                         <tr>
                                                             <th class="text-center">#</th>
                                                             <th>Code</th>
+                                                            <th>Date</th>
                                                             <th>Identifier</th>
                                                             <th>Age Band</th>
                                                             <th>Gender</th>
@@ -265,6 +266,7 @@
                                                             <tr>
                                                                 <td  class="text-center">{{ ++$key }}</td>
                                                                 <td>{{ $contact->code }}</td>
+                                                                <td>{{ date('M d, Y', strtotime($contact->date)) }}</td>
                                                                 <td>{{ $contact->identifier }}</td>
                                                                 <td>{{ getAgeBand('age', $contact->age_band) }}</td>
                                                                 <td>{{ getGenderStatus('gender', $contact->gender) }}</td>
@@ -323,8 +325,8 @@
                                                                                     <input type="text" id="sexuality" name="sexuality" class="form-control" value="{{ getGenderStatus('sexuality', $contact->sexuality) }}" disabled>
                                                                                 </div>
                                                                                 <div class="col-md-6">
-                                                                                    <label for="det-diagnoses" class="mt-3 mb-0">Diagnoses / Self Identifying Labels</label>
-                                                                                    <select id="det-diagnoses" name="diagnoses[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <label for="{{ $contact->id }}-diagnoses" class="mt-3 mb-0">Diagnoses / Self Identifying Labels</label>
+                                                                                    <select id="{{ $contact->id }}-diagnoses" name="diagnoses[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         <option>Select Diagnoses / Self Identifying Labels</option>
                                                                                         @foreach (getIssues('diagnose') as $key => $cat)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->diagnoses))) selected @endif>{{ $cat }}</option>
@@ -332,8 +334,8 @@
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md-6">
-                                                                                    <label for="det-triggers" class="mt-3 mb-0">Triggers</label>
-                                                                                    <select id="det-triggers" name="triggers[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <label for="{{ $contact->id }}-triggers" class="mt-3 mb-0">Triggers</label>
+                                                                                    <select id="{{ $contact->id }}-triggers" name="triggers[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         <option>Select Triggers</option>
                                                                                         @foreach (getIssues('trigger') as $key => $cat)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->triggers))) selected @endif>{{ $cat }}</option>
@@ -341,26 +343,14 @@
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md-6">
-                                                                                    <label for="det-self_harm_method" class="mt-3 mb-0">Self Harm Method</label>
-                                                                                    <select id="det-self_harm_method" name="self_harm_method[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <label for="{{ $contact->id }}-self_harm_method" class="mt-3 mb-0">Self Harm Method</label>
+                                                                                    <select id="{{ $contact->id }}-self_harm_method" name="self_harm_method[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         <option>Select Self Harm Method</option>
                                                                                         @foreach (getIssues('self_harm') as $key => $cat)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->self_harm_method))) selected @endif>{{ $cat }}</option>
                                                                                         @endforeach
                                                                                     </select>
                                                                                 </div>
-                                                                                {{-- <div class="col-md-6">
-                                                                                    <label for="diagnoses">Diagnoses </label>
-                                                                                    <input type="text" id="diagnoses" name="diagnoses" class="form-control" value="{{ getIssues('diagnoses', $contact->diagnoses) }}" disabled>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <label for="triggers">Triggers</label>
-                                                                                    <input type="text" id="triggers" name="triggers" class="form-control" value="{{ getIssues('triggers', $contact->triggers) }}" disabled>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <label for="self_harm_method">Self Harm Method</label>
-                                                                                    <input type="text" id="self_harm_method" name="self_harm_method" class="form-control" value="{{ getIssues('self_harm_method', $contact->self_harm_method) }}" disabled>
-                                                                                </div> --}}
                                                                                 <div class="col-md-6">
                                                                                     <label for="contact_type">Contact Type</label>
                                                                                     <input type="text" id="contact_type" name="contact_type" class="form-control" value="{{ getIssues('contact_type', $contact->contact_type) }}" disabled>
@@ -379,9 +369,9 @@
                                                                                 </div>
 
                                                                                 <div class="col-md-6">
-                                                                                    <label for="det-personal_situation" class="mt-3 mb-0">Personal Situtaion</label>
+                                                                                    <label for="{{ $contact->id }}-personal_situation" class="mt-3 mb-0">Personal Situtaion</label>
                                                                                     <br>
-                                                                                    <select id="det-personal_situation" name="personal_situation[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <select id="{{ $contact->id }}-personal_situation" name="personal_situation[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         <option>Select Personal Situtaion</option>
                                                                                         @foreach (getSituation('personal') as $key => $value)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->personal_situation))) selected @endif>{{ $value }}</option>
@@ -391,9 +381,9 @@
 
 
                                                                                 <div class="col-md-6">
-                                                                                    <label for="det-specific_issues" class="mt-3 mb-0">Specific Issues</label>
+                                                                                    <label for="{{ $contact->id }}-specific_issues" class="mt-3 mb-0">Specific Issues</label>
                                                                                     <br>
-                                                                                    <select id="det-specific_issues" name="specific_issues[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <select id="{{ $contact->id }}-specific_issues" name="specific_issues[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         @foreach (getIssues('specific') as $key => $value)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->specific_issues))) selected @endif>{{ $value }}</option>
                                                                                         @endforeach
@@ -401,9 +391,9 @@
                                                                                 </div>
 
                                                                                 <div class="col-md-6">
-                                                                                    <label for="det-use_for" class="mt-3 mb-0">Use For</label>
+                                                                                    <label for="{{ $contact->id }}-use_for" class="mt-3 mb-0">Use For</label>
                                                                                     <br>
-                                                                                    <select id="det-use_for" name="use_for[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <select id="{{ $contact->id }}-use_for" name="use_for[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         <option>Select Use For </option>
                                                                                         @foreach (getPlatforms('usage') as $key => $value)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->use_for))) selected @endif>{{ $value }}</option>
@@ -412,9 +402,9 @@
                                                                                 </div>
 
                                                                                 <div class="col-md-6">
-                                                                                    <label for="filter-outcomes" class="mt-3 mb-0">Outcome</label>
+                                                                                    <label for="{{ $contact->id }}-outcomes" class="mt-3 mb-0">Outcome</label>
                                                                                     <br>
-                                                                                    <select id="filter-outcomes" name="outcomes[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
+                                                                                    <select id="{{ $contact->id }}-outcomes" name="outcomes[]" class="select2 form-control select2-multiple" data-placeholder="Select" multiple="multiple" disabled>
                                                                                         <option>Select Outcome </option>
                                                                                         @foreach (getPlatforms('outcomes') as $key => $value)
                                                                                             <option value="{{ ++$key }}" @if(in_array($key, explode(',', $contact->outcomes))) selected @endif>{{ $value }}</option>
