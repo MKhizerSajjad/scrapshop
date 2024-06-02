@@ -30,11 +30,11 @@ return new class extends Migration
             $table->integer('location');
             $table->tinyInteger('service_awareness');
             $table->boolean('other_involved_services');
-            $table->tinyInteger('personal_situation');
-            $table->tinyInteger('specific_issues');
-            $table->tinyInteger('use_for');
-            $table->tinyInteger('outcomes');
-            $table->longText('note');
+            $table->string('personal_situation', 255);
+            $table->string('specific_issues', 255);
+            $table->string('use_for', 255);
+            $table->string('outcomes', 255);
+            $table->longText('note')->nullable();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('users')->onDelete('CASCADE');

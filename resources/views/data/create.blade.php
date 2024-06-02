@@ -296,7 +296,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for=">personal_situation">Personal Situtaion</label>
-                                            <select id=">personal_situation" name="personal_situation" class="form-control @error('personal_situation') is-invalid @enderror">
+                                            <select id=">personal_situation" name="personal_situation[]" class="select2 form-control select2-multiple @error('personal_situation') is-invalid @enderror" multiple="multiple">
                                                <option value="">Select Personal Situtaion</option>
                                                @foreach (getSituation('personal') as $key => $value)
                                                    <option value="{{ ++$key }}">{{ $value }}</option>
@@ -312,7 +312,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for=">specific_issues">Specific Issues</label>
-                                            <select id=">specific_issues" name="specific_issues" class="form-control @error('specific_issues') is-invalid @enderror">
+                                            <select id=">specific_issues" name="specific_issues[]" class="select2 form-control select2-multiple @error('specific_issues') is-invalid @enderror" multiple="multiple">
                                                 <option value="">Select Specific Issue </option>
                                                @foreach (getIssues('specific') as $key => $value)
                                                    <option value="{{ ++$key }}">{{ $value }}</option>
@@ -328,7 +328,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for=">use_for">Use For</label>
-                                            <select id=">use_for" name="use_for" class="form-control @error('use_for') is-invalid @enderror">
+                                            <select id=">use_for" name="use_for[]" class="select2 form-control select2-multiple @error('use_for') is-invalid @enderror" multiple="multiple">
                                                 <option value="">Select Use For </option>
                                                 @foreach (getPlatforms('usage') as $key => $value)
                                                    <option value="{{ ++$key }}">{{ $value }}</option>
@@ -344,7 +344,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for=">outcomes">Outcome</label>
-                                            <select id=">outcomes" name="outcomes" class="form-control @error('outcomes') is-invalid @enderror">
+                                            <select id=">outcomes" name="outcomes[]" class="select2 form-control select2-multiple @error('outcomes') is-invalid @enderror" multiple="multiple">
                                                 <option value="">Select Outcome </option>
                                                 @foreach (getPlatforms('outcomes') as $key => $value)
                                                     <option value="{{ ++$key }}">{{ $value }}</option>

@@ -167,10 +167,10 @@ class DataController extends Controller
             'location' => $request->location,
             'service_awareness' => $request->service_awareness,
             'other_involved_services' => $request->other_involved_services,
-            'personal_situation' => $request->personal_situation,
-            'specific_issues' => $request->specific_issues,
-            'use_for' => $request->use_for,
-            'outcomes' => $request->outcomes,
+            'personal_situation' => implode(', ', $request->personal_situation),
+            'specific_issues' => implode(', ', $request->specific_issues),
+            'use_for' => implode(', ', $request->use_for),
+            'outcomes' => implode(', ', $request->outcomes),
             'note' => $request->note
         ];
 
