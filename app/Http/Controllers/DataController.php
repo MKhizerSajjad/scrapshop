@@ -22,90 +22,95 @@ class DataController extends Controller
 
         // Apply filters
         if ($request->filled('code')) {
-            $data->orWhere('code', 'LIKE', '%'.$request->input('code').'%');
+            $data->where('code', 'LIKE', '%'.$request->input('code').'%');
         }
 
         if ($request->filled('from') && $request->filled('to')) {
-            $data->orWhereBetween('date', [$request->input('from'), $request->input('to')]);
+            $data->whereBetween('date', [$request->input('from'), $request->input('to')]);
         } elseif ($request->filled('from')) {
-            $data->orWhere('date', '>=', $request->input('from'));
+            $data->where('date', '>=', $request->input('from'));
         } elseif ($request->filled('to')) {
-            $data->orWhere('date', '<=', $request->input('to'));
+            $data->where('date', '<=', $request->input('to'));
         }
 
         if ($request->filled('identifier')) {
-            $data->orWhere('identifier', 'like', '%' . $request->input('identifier') . '%');
+            $data->where('identifier', 'like', '%' . $request->input('identifier') . '%');
         }
 
         if ($request->filled('employee')) {
-            $data->orWhereIn('employee_id', $request->input('employee'));
+            $data->whereIn('employee_id', $request->input('employee'));
         }
 
         if ($request->filled('channel')) {
-            $data->orWhereIn('channel', $request->input('channel'));
+            $data->whereIn('channel', $request->input('channel'));
         }
 
         if ($request->filled('call_type')) {
-            $data->orWhereIn('call_type', $request->input('call_type'));
+            $data->whereIn('call_type', $request->input('call_type'));
         }
 
         if ($request->filled('age_band')) {
-            $data->orWhereIn('age_band', $request->input('age_band'));
+            $data->whereIn('age_band', $request->input('age_band'));
         }
 
         if ($request->filled('gender')) {
-            $data->orWhereIn('gender', $request->input('gender'));
+            $data->whereIn('gender', $request->input('gender'));
         }
 
         if ($request->filled('sexuality')) {
-            $data->orWhereIn('sexuality', $request->input('sexuality'));
+            $data->whereIn('sexuality', $request->input('sexuality'));
         }
 
         if ($request->filled('diagnoses')) {
-            $data->orWhereIn('diagnoses', $request->input('diagnoses'));
+            $data->whereIn('diagnoses', $request->input('diagnoses'));
         }
 
         if ($request->filled('triggers')) {
-            $data->orWhereIn('triggers', $request->input('triggers'));
+            $data->whereIn('triggers', $request->input('triggers'));
         }
 
         if ($request->filled('self_harm_method')) {
-            $data->orWhereIn('self_harm_method', $request->input('self_harm_method'));
+            $data->whereIn('self_harm_method', $request->input('self_harm_method'));
         }
 
         if ($request->filled('contact_type')) {
-            $data->orWhereIn('contact_type', $request->input('contact_type'));
+            $data->whereIn('contact_type', $request->input('contact_type'));
         }
 
         if ($request->filled('location')) {
-            $data->orWhereIn('location', $request->input('location'));
+            $data->whereIn('location', $request->input('location'));
         }
 
         if ($request->filled('service_awareness')) {
-            $data->orWhereIn('service_awareness', $request->input('service_awareness'));
+            $data->whereIn('service_awareness', $request->input('service_awareness'));
         }
 
         if ($request->filled('other_involved_services')) {
-            $data->orWhereIn('other_involved_services', $request->input('other_involved_services'));
+            $data->whereIn('other_involved_services', $request->input('other_involved_services'));
         }
 
         if ($request->filled('personal_situation')) {
-            $data->orWhereIn('personal_situation', $request->input('personal_situation'));
+            $data->whereIn('personal_situation', $request->input('personal_situation'));
         }
 
         if ($request->filled('specific_issues')) {
-            $data->orWhereIn('specific_issues', $request->input('specific_issues'));
+            $data->whereIn('specific_issues', $request->input('specific_issues'));
         }
 
         if ($request->filled('use_for')) {
-            $data->orWhereIn('use_for', $request->input('use_for'));
+            $data->whereIn('use_for', $request->input('use_for'));
         }
 
         if ($request->filled('outcomes')) {
-            $data->orWhereIn('outcomes', $request->input('outcomes'));
+            $data->whereIn('outcomes', $request->input('outcomes'));
         }
 
-        $data = $data->paginate(50);
+        $data = $data->orderBy('date')->paginate(50);
+
+    // Retain filter parameters in pagination links
+    $data->appends($request->except('page'));
+    return view('data.index', compact('data'));
+
 
         return view('data.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 50);
@@ -280,9 +285,9 @@ class DataController extends Controller
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new ContactsExport, 'data.csv');
+        return Excel::download(new ContactsExport($request->all()), 'data.csv');
         // return back()->with('success','Contacts exported successfully');
     }
 

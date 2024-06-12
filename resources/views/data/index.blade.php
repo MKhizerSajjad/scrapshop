@@ -237,7 +237,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Data List</h4>
                             <div class="d-flex justify-content-end gap-2" bis_skin_checked="1">
-                                <a class="btn btn-secondary waves-effect waves-light" href="{{ route('data.export') }}"> <i class="bx bx-export me-1"></i> Export Contacts</a>
+                                <a class="btn btn-secondary waves-effect waves-light" href="{{ route('data.export', request()->all()) }}"> <i class="bx bx-export me-1"></i> Export Contacts</a>
                                 <a href="{{ route('data.create') }}" class="btn btn-primary waves-effect waves-light w-10"> <i class="bx bx-plus me-1"></i> Add New</a>
                             </div>
                             @if (count($data) > 0)
