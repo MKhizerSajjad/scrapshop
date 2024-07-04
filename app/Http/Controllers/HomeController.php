@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Data;
-use App\Models\User;
+use App\Models\Lorry;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,8 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data = Data::count();
-        $employees = User::where('user_type', 2)->count();
-        return view('home', compact('data', 'employees'));
+        $data = json_decode('{}');
+        $data->lorry = Lorry::count();
+        $data->purchase = Purchase::count();
+        return view('home', compact('data'));
     }
 }
