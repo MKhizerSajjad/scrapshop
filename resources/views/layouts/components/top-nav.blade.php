@@ -24,7 +24,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle arrow-none" href="{{route('purchase.index')}}" id="topnav-dashboard" role="button"
                         >
-                            <i class="bx bx-invoices me-1"></i>
+                            <i class="bx bx-receipt me-1"></i>
                             <span key="t-aitool">Purchases</span>
                         </a>
                     </li>
