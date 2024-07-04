@@ -186,6 +186,7 @@ class ContactsExport implements FromCollection
             ];
         }));
 
+        logger($transformedData);
         return $transformedData;
     }
 

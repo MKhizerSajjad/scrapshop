@@ -15,10 +15,17 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none" href="{{route('data.index')}}" id="topnav-dashboard" role="button"
+                        <a class="nav-link dropdown-toggle arrow-none" href="{{route('lorry.index')}}" id="topnav-dashboard" role="button"
                         >
-                            <i class="bx bx-user me-1"></i>
-                            <span key="t-aitool">Data</span>
+                            <i class="bx bx-car me-1"></i>
+                            <span key="t-aitool">Lorrries</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="{{route('purchase.index')}}" id="topnav-dashboard" role="button"
+                        >
+                            <i class="bx bx-invoices me-1"></i>
+                            <span key="t-aitool">Purchases</span>
                         </a>
                     </li>
                 </ul>

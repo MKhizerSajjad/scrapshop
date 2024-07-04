@@ -12,7 +12,7 @@
         <meta name="keywords" content="{{ config('app.name', 'Laravel') }}" />
         <meta name="description" content="{{ config('app.name', 'Laravel') }}" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
+        <link rel="shortcut icon" href="{{ asset('images/ico.png') }}">
 
         @include('layouts/includes.css')
         <!-- APEX charts -->

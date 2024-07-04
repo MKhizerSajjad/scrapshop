@@ -25,14 +25,64 @@
     {
         $statuses = [
             'general'=> [
-                '1' => ['Active', '<span class="badge bg-primary-light">Active</span>'],
-                '2' => ['Inactive', '<span class="badge bg-warning-light">Inactive</span>']
+                '1' => ['Active', '<span class="badge bg-primary">Active</span>'],
+                '2' => ['Inactive', '<span class="badge bg-warning">Inactive</span>']
             ],
             'bool'=> [
-                '1' => ['Yes', '<span class="badge bg-primary-light">Yes</span>'],
-                '2' => ['No', '<span class="badge bg-warning-light">No</span>'],
-                '3' => ['Not Known', '<span class="badge bg-secondary-light">Not Known</span>'],
+                '1' => ['Yes', '<span class="badge bg-primary">Yes</span>'],
+                '2' => ['No', '<span class="badge bg-warning">No</span>'],
+                '3' => ['Not Known', '<span class="badge bg-secondary">Not Known</span>'],
             ]
+        ];
+
+        return statusReturn($prefix, $statuses, $status, $type );
+    }
+
+    function getMaterials($prefix, $status = null, $type = null)
+    {
+        $statuses = [
+            'general'=> [
+                '1' => ['Ferrous Scrap', '<span class="badge bg-primary">Ferrous Scrap</span>'],
+                '2' => ['PNS Scrap', '<span class="badge bg-primary">PNS Scrap</span>'],
+                '3' => ['Stainless Steel Scrap', '<span class="badge bg-primary">Stainless Steel Scrap</span>'],
+                '4' => ['Copper Scrap', '<span class="badge bg-primary">Copper Scrap</span>'],
+                '5' => ['Aluminium Scrap', '<span class="badge bg-primary">Aluminium Scrap</span>'],
+                '6' => ['Brass Scrap', '<span class="badge bg-primary">Brass Scrap</span>'],
+                '7' => ['Cable & Wire Scrap', '<span class="badge bg-warning">Cable & Wire Scrap</span>'],
+                '8' => ['Motor Scrap', '<span class="badge bg-warning">Motor Scrap</span>'],
+                '9' => ['Battery Scrap', '<span class="badge bg-warning">Battery Scrap</span>'],
+                '10' => ['Electronic (E-Waste) Scrap', '<span class="badge bg-warning">Electronic (E-Waste) Scrap</span>'],
+            ]
+        ];
+
+        return statusReturn($prefix, $statuses, $status, $type );
+    }
+
+    function getPayment($prefix, $status = null, $type = null)
+    {
+        $statuses = [
+            'method'=> [
+                '1' => ['Cash', '<span class="badge bg-primary">Cash</span>'],
+                '2' => ['Online', '<span class="badge bg-Success">Online</span>'],
+                '3' => ['Check', '<span class="badge bg-warning">Check</span>'],
+            ],
+            'status'=> [
+                '1' => ['Paid', '<span class="badge bg-primary">Paid</span>'],
+                '2' => ['Pending', '<span class="badge bg-warning">Pending</span>'],
+            ]
+        ];
+
+        return statusReturn($prefix, $statuses, $status, $type );
+    }
+
+    function getDelivery($prefix, $status = null, $type = null)
+    {
+        $statuses = [
+            'status'=> [
+                '1' => ['Delivered', '<span class="badge bg-Success">Delivered</span>'],
+                '2' => ['Dispatched', '<span class="badge bg-primary">Dispatched</span>'],
+                '3' => ['Pending', '<span class="badge bg-secondary">Pending</span>'],
+            ],
         ];
 
         return statusReturn($prefix, $statuses, $status, $type );
@@ -42,9 +92,9 @@
     {
         $statuses = [
             'type'=> [
-                '1' => ['Admin', '<span class="badge bg-primary-light">Admin</span>'],
-                '2' => ['Shop', '<span class="badge bg-warning-light">Shop</span>'],
-                '3' => ['Customer', '<span class="badge bg-success-light">Customer</span>']
+                '1' => ['Admin', '<span class="badge bg-primary">Admin</span>'],
+                '2' => ['Shop', '<span class="badge bg-warning">Shop</span>'],
+                '3' => ['Customer', '<span class="badge bg-success">Customer</span>']
             ],
         ];
 
@@ -55,35 +105,35 @@
     {
         $statuses = [
             'social' => [
-                '1' => ['Webchat', '<span class="badge bg-primary-light">Webchat</span>'],
-                '2' => ['Messaging', '<span class="badge bg-warning-light">Messaging</span>'],
-                '3' => ['ASS', '<span class="badge bg-success-light">ASS</span>']
+                '1' => ['Webchat', '<span class="badge bg-primary">Webchat</span>'],
+                '2' => ['Messaging', '<span class="badge bg-warning">Messaging</span>'],
+                '3' => ['ASS', '<span class="badge bg-success">ASS</span>']
             ],
             'usage' => [
-                '1' => ['Live Journal', '<span class="badge bg-primary-light">Live Journal</span>'],
-                '2' => ['A Distraction', '<span class="badge bg-warning-light">A Distraction</span>'],
-                '3' => ['To Offload', '<span class="badge bg-success-light">To Offload</span>'],
-                '4' => ['To Find Support', '<span class="badge bg-info-light">To Find Support</span>'],
-                '5' => ['Cry For Help', '<span class="badge bg-danger-light">Cry For Help</span>'],
-                '6' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
+                '1' => ['Live Journal', '<span class="badge bg-primary">Live Journal</span>'],
+                '2' => ['A Distraction', '<span class="badge bg-warning">A Distraction</span>'],
+                '3' => ['To Offload', '<span class="badge bg-success">To Offload</span>'],
+                '4' => ['To Find Support', '<span class="badge bg-info">To Find Support</span>'],
+                '5' => ['Cry For Help', '<span class="badge bg-danger">Cry For Help</span>'],
+                '6' => ['Not Known', '<span class="badge bg">Not Known</span>'],
             ],
             'service_awareness' => [
-                '1' => ['Internet Search', '<span class="badge bg-primary-light">Internet Search</span>'],
-                '2' => ['Printed Media', '<span class="badge bg-warning-light">Printed Media</span>'],
-                '3' => ['Signposted By Educational Facility', '<span class="badge bg-success-light">Signposted By Educational Facility</span>'],
-                '4' => ['Signposted By NHS/Police', '<span class="badge bg-info-light">Signposted By NHS/Police</span>'],
-                '5' => ['Social Media', '<span class="badge bg-danger-light">Social Media</span>'],
-                '6' => ['TV/Radio', '<span class="badge bg-secondary-light">TV/Radio</span>'],
-                '7' => ['Word Of Mouth', '<span class="badge bg-dark-light">Word Of Mouth</span>'],
-                '8' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
+                '1' => ['Internet Search', '<span class="badge bg-primary">Internet Search</span>'],
+                '2' => ['Printed Media', '<span class="badge bg-warning">Printed Media</span>'],
+                '3' => ['Signposted By Educational Facility', '<span class="badge bg-success">Signposted By Educational Facility</span>'],
+                '4' => ['Signposted By NHS/Police', '<span class="badge bg-info">Signposted By NHS/Police</span>'],
+                '5' => ['Social Media', '<span class="badge bg-danger">Social Media</span>'],
+                '6' => ['TV/Radio', '<span class="badge bg-secondary">TV/Radio</span>'],
+                '7' => ['Word Of Mouth', '<span class="badge bg-dark">Word Of Mouth</span>'],
+                '8' => ['Not Known', '<span class="badge bg">Not Known</span>'],
                 '9' => ['Other', '<span class="badge bg-primary">Other</span>']
             ],
             'outcomes' => [
-                '1' => ['Action Plan', '<span class="badge bg-primary-light">Action Plan</span>'],
-                '2' => ['Discussion Of Current Concerns / Reframing', '<span class="badge bg-warning-light">Discussion Of Current Concerns / Reframing</span>'],
-                '3' => ['Distractions Offered', '<span class="badge bg-success-light">Distractions Offered</span>'],
-                '4' => ['Emergency Services Called', '<span class="badge bg-info-light">Emergency Services Called</span>'],
-                '5' => ['Ends Unexpectedly', '<span class="badge bg-danger-light">Ends Unexpectedly</span>'],
+                '1' => ['Action Plan', '<span class="badge bg-primary">Action Plan</span>'],
+                '2' => ['Discussion Of Current Concerns / Reframing', '<span class="badge bg-warning">Discussion Of Current Concerns / Reframing</span>'],
+                '3' => ['Distractions Offered', '<span class="badge bg-success">Distractions Offered</span>'],
+                '4' => ['Emergency Services Called', '<span class="badge bg-info">Emergency Services Called</span>'],
+                '5' => ['Ends Unexpectedly', '<span class="badge bg-danger">Ends Unexpectedly</span>'],
                 '6' => ['Improved Mood', '<span class="badge bg-secondary-light">Improved Mood</span>'],
                 '7' => ['Info Given', '<span class="badge bg-dark-light">Info Given</span>'],
                 '8' => ['Self-Harm Prevented Today', '<span class="badge bg-light">Self-Harm Prevented Today</span>'],
@@ -204,7 +254,6 @@
         return statusReturn($prefix, $statuses, $status, $type);
     }
 
-
     function getLocation($prefix, $status = null, $type = null)
     {
         $statuses = [
@@ -221,38 +270,37 @@
         return statusReturn($prefix, $statuses, $status, $type);
     }
 
+    function getSituation($prefix, $status = null, $type = null)
+    {
+        $statuses = [
+            'personal' => [
+                '1' => ['Feelings', '<span class="badge bg-primary-light">Feelings</span>'],
+                '2' => ['Thoughts', '<span class="badge bg-warning-light">Thoughts</span>'],
+                '3' => ['Triggers', '<span class="badge bg-success-light">Triggers</span>'],
+                '4' => ['Choices', '<span class="badge bg-info-light">Choices</span>'],
+                '5' => ['Lack Of Support - Family', '<span class="badge bg-danger-light">Lack Of Support - Family</span>'],
+                '6' => ['Lack Of Support - Peers', '<span class="badge bg-secondary-light">Lack Of Support - Peers</span>'],
+                '7' => ['Lack Of Support - Formal Services', '<span class="badge bg-dark-light">Lack Of Support - Formal Services</span>'],
+                '8' => ['In Crisis', '<span class="badge bg-light">In Crisis</span>'],
+                '9' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
+            ]
+        ];
 
-function getSituation($prefix, $status = null, $type = null)
-{
-    $statuses = [
-        'personal' => [
-            '1' => ['Feelings', '<span class="badge bg-primary-light">Feelings</span>'],
-            '2' => ['Thoughts', '<span class="badge bg-warning-light">Thoughts</span>'],
-            '3' => ['Triggers', '<span class="badge bg-success-light">Triggers</span>'],
-            '4' => ['Choices', '<span class="badge bg-info-light">Choices</span>'],
-            '5' => ['Lack Of Support - Family', '<span class="badge bg-danger-light">Lack Of Support - Family</span>'],
-            '6' => ['Lack Of Support - Peers', '<span class="badge bg-secondary-light">Lack Of Support - Peers</span>'],
-            '7' => ['Lack Of Support - Formal Services', '<span class="badge bg-dark-light">Lack Of Support - Formal Services</span>'],
-            '8' => ['In Crisis', '<span class="badge bg-light">In Crisis</span>'],
-            '9' => ['Not Known', '<span class="badge bg-light">Not Known</span>'],
-        ]
-    ];
+        return statusReturn($prefix, $statuses, $status, $type);
+    }
 
-    return statusReturn($prefix, $statuses, $status, $type);
-}
+    function getPersonalSituationStatus1($prefix, $status = null, $type = null)
+    {
+        $statuses = [
+            'personal_situation' => [
+                '1' => ['Feelings', '<span class="badge bg-primary-light">Feelings</span>'],
+                '2' => ['Thoughts', '<span class="badge bg-warning-light">Thoughts</span>'],
+                '3' => ['Triggers', '<span class="badge bg-success-light">Triggers</span>'],
+                '4' => ['Choices', '<span class="badge bg-info-light">Choices</span>'],
+            ]
+        ];
 
-function getPersonalSituationStatus1($prefix, $status = null, $type = null)
-{
-    $statuses = [
-        'personal_situation' => [
-            '1' => ['Feelings', '<span class="badge bg-primary-light">Feelings</span>'],
-            '2' => ['Thoughts', '<span class="badge bg-warning-light">Thoughts</span>'],
-            '3' => ['Triggers', '<span class="badge bg-success-light">Triggers</span>'],
-            '4' => ['Choices', '<span class="badge bg-info-light">Choices</span>'],
-        ]
-    ];
-
-    return statusReturn($prefix, $statuses, $status, $type);
-}
+        return statusReturn($prefix, $statuses, $status, $type);
+    }
 
 ?>

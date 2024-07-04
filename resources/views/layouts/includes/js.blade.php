@@ -27,3 +27,6 @@
 
 <script src="{{ asset('libs/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
+
+<script src="{{ asset('libs/jquery.repeater/jquery.repeater.min.js') }}"></script>
+<script src="{{ asset('js/pages/form-repeater.int.js') }}"></script>
