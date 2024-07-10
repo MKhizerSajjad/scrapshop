@@ -58,8 +58,8 @@
                                             <label for="delivery">Delivery Status <span class="text text-danger"> *</span></label>
                                             <select id="delivery_status" name="delivery" class="form-control">
                                                 <option value="">Select Delivery Status </option>
-                                                @foreach (getPayment('status') as $key => $status)
-                                                    <option value="{{ ++$key }}" @if($key == $purchase->delivery) selected @endif>{{ $status }}</option>
+                                                @foreach (getDelivery('status') as $key => $status)
+                                                    <option value="{{ ++$key }}" @if($key == $purchase->payment) selected @endif>{{ $status }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -69,8 +69,8 @@
                                             <label for="payment">Payment Status <span class="text text-danger"> *</span></label>
                                             <select id="payment_status" name="payment" class="form-control">
                                                 <option value="">Select Payment Status </option>
-                                                @foreach (getDelivery('status') as $key => $status)
-                                                    <option value="{{ ++$key }}" @if($key == $purchase->payment) selected @endif>{{ $status }}</option>
+                                                @foreach (getPayment('status') as $key => $status)
+                                                    <option value="{{ ++$key }}" @if($key == $purchase->delivery) selected @endif>{{ $status }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

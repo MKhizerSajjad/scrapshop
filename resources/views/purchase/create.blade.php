@@ -57,7 +57,7 @@
                                             <label for="delivery">Delivery Status <span class="text text-danger"> *</span></label>
                                             <select id="delivery_status" name="delivery" class="form-control">
                                                 <option value="">Select Delivery Status </option>
-                                                @foreach (getPayment('status') as $key => $status)
+                                                @foreach (getDelivery('status') as $key => $status)
                                                     <option value="{{ ++$key }}">{{ $status }}</option>
                                                 @endforeach
                                             </select>
@@ -68,7 +68,7 @@
                                             <label for="payment">Payment Status <span class="text text-danger"> *</span></label>
                                             <select id="payment_status" name="payment" class="form-control">
                                                 <option value="">Select Payment Status </option>
-                                                @foreach (getDelivery('status') as $key => $status)
+                                                @foreach (getPayment('status') as $key => $status)
                                                     <option value="{{ ++$key }}">{{ $status }}</option>
                                                 @endforeach
                                             </select>
