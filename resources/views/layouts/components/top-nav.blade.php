@@ -18,7 +18,7 @@
                         <a class="nav-link dropdown-toggle arrow-none" href="{{route('lorry.index')}}" id="topnav-dashboard" role="button"
                         >
                             <i class="bx bx-car me-1"></i>
-                            <span key="t-aitool">Lorrries</span>
+                            <span key="t-aitool">Lorries</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown">

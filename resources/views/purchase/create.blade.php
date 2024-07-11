@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="mb-3">
-                                            <label for="number">Searial Number <span class="text text-danger"> *</span></label>
+                                            <label for="number">Serial Number <span class="text text-danger"> *</span></label>
                                             <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Serial Number" value="#{{ $code }}" readonly>
                                             @error('number')
                                                 <span class="invalid-feedback" role="alert">
