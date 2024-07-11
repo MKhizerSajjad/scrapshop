@@ -45,7 +45,7 @@
                                             <tr>
                                                 <th class="text-center">#</th>
                                                 <th>Name</th>
-                                                <th>Number</th>
+                                                <th>Plate Number</th>
                                                 <th>Capacity</th>
                                                 <th lass="text-center" width=100>Status</th>
                                                 <th class="text-center" width=100>Options</th>

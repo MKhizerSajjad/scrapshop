@@ -44,8 +44,8 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="mb-3">
-                                            <label for="number">Number <span class="text text-danger"> *</span></label>
-                                            <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Number" value="{{ $lorry->number }}">
+                                            <label for="number">Plate Number <span class="text text-danger"> *</span></label>
+                                            <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Plate Number" value="{{ $lorry->number }}">
                                             @error('number')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
