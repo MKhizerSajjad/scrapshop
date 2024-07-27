@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Lorry;
 use App\Models\Purchase;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,6 +28,7 @@ class HomeController extends Controller
         $data = json_decode('{}');
         $data->lorry = Lorry::count();
         $data->purchase = Purchase::count();
+        $data->sale = Sale::count();
         return view('home', compact('data'));
     }
 }
