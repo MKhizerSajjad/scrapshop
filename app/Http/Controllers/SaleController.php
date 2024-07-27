@@ -4,65 +4,149 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Sale;
+use App\Models\Lorry;
+use App\Models\SaleMaterial;
+use App\Models\SaleDelivery;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = Sale::with('materials')->orderBy('code')->paginate(10);
+
+        return view('sale.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $code = $this->generateInvoiceCode();
-        dd($code);
+        $lorries =  Lorry::orderBy('number')->where('status', 1)->get();
+        return view('sale.create', compact('code', 'lorries'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'date' => 'required',
+        ]);
+
+        $code = $this->generateInvoiceCode();
+
+        $data = [
+            'delivery' => $request->delivery ?? 1,
+            'payment' => $request->payment ?? 1,
+            'date' => $request->date,
+            'code' => $code,
+            'price' => $request->total_price,
+            'detail' => $request->detail,
+        ];
+
+        $purchase = Sale::create($data);
+
+        $purchaseId = $purchase->id;
+
+        for($i=0; $i<count($request->material); $i++) {
+            if(isset($request->material[$i]) && isset($request->quantity[$i]) && isset($request->unit_price[$i])) {
+                $data = [
+                    'sale_id' => $purchaseId,
+                    'material_id' => $request->material[$i],
+                    'qty' => $request->quantity[$i],
+                    'unit_price' => $request->unit_price[$i],
+                ];
+                SaleMaterial::create($data);
+            }
+        }
+
+        for($i=0; $i<count($request->lorry); $i++) {
+            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+                $data = [
+                    'status' => 1,
+                    'sale_id' => $purchaseId,
+                    'lorry_id' => $request->lorry[$i],
+                    'qty' => $request->ship_quantity[$i],
+                ];
+                SaleDelivery::create($data);
+            }
+        }
+
+        return redirect()->route('sale.index')->with('success','Record created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Sale $sale)
     {
-        //
+        if (!empty($sale)) {
+
+            $data = [
+                'sale' => $sale
+            ];
+            return view('sale.show', $data);
+
+        } else {
+            return redirect()->route('sale.index');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Sale $sale)
     {
-        //
+        $lorries = Lorry::orderBy('number')->where('status', 1)->get();
+        return view('sale.edit', compact('sale', 'lorries'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Sale $sale)
     {
-        //
+        $this->validate($request, [
+            'date' => 'required',
+        ]);
+
+        $saleId = $sale->id;
+        $data = [
+            'delivery' => $request->delivery ?? 1,
+            'payment' => $request->payment ?? 1,
+            'date' => $request->date,
+            'price' => $request->total_price,
+            'detail' => $request->detail,
+        ];
+
+        Sale::find($saleId)->update($data);
+
+        SaleMaterial::where('sale_id', $saleId)->delete();
+        for ($i = 0; $i < count($request->material); $i++) {
+            if (isset($request->material[$i]) && isset($request->quantity[$i]) && isset($request->unit_price[$i])) {
+                SaleMaterial::updateOrCreate(
+                    [
+                        'sale_id' => $saleId,
+                        'material_id' => $request->material[$i],
+                    ],
+                    [
+                        'qty' => $request->quantity[$i],
+                        'unit_price' => $request->unit_price[$i],
+                    ]
+                );
+            }
+        }
+
+        SaleDelivery::where('sale_id', $saleId)->delete();
+        for($i=0; $i<count($request->lorry); $i++) {
+            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+                $data = [
+                    'status' => 1,
+                    'sale_id' => $saleId,
+                    'lorry_id' => $request->lorry[$i],
+                    'qty' => $request->ship_quantity[$i],
+                ];
+                SaleDelivery::create($data);
+            }
+        }
+
+        return redirect()->route('sale.index')->with('success','Updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Sale $sale)
     {
-        //
+        Sale::find($sale->id)->delete();
+        return redirect()->route('sale.index')->with('success', 'Deleted successfully');
     }
 
     public function generateInvoiceCode() {

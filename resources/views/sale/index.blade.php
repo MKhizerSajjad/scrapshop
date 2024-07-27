@@ -8,12 +8,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0 font-size-18">Lorry</h4>
+                        <h4 class="mb-sm-0 font-size-18">Sale</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class=""><a href="javascript: void(0);">Lorry</a></li>
+                                <li class=""><a href="javascript: void(0);">Sale</a></li>
                                 <li class="mx-1"><a href="javascript: void(0);"> > </a></li>
-                                <li class="breadcrumb-item active">Lorry List</li>
+                                <li class="breadcrumb-item active">Sale List</li>
                             </ol>
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Lorry List</h4>
+                            <h4 class="card-title">Sale List</h4>
                             <div class="d-flex justify-content-end gap-2" bis_skin_checked="1">
-                                <a href="{{ route('lorry.create') }}" class="btn btn-primary waves-effect waves-light"> <i class="bx bx-plus me-1"></i> Add New</a>
+                                <a href="{{ route('sale.create') }}" class="btn btn-primary waves-effect waves-light"> <i class="bx bx-plus me-1"></i> Add New</a>
                             </div>
                             {{-- <div class="card-title-desc card-subtitle" bis_skin_checked="1">Create responsive tables by wrapping any <code>.table</code> in <code>.table-responsive</code>to make them scroll horizontally on small devices (under 768px).</div> --}}
                             @if (count($data) > 0)
@@ -44,22 +44,24 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th>Name</th>
-                                                <th>Plate Number</th>
-                                                <th>Capacity</th>
-                                                <th lass="text-center" width=100>Status</th>
+                                                <th>Serial No</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th lass="text-center" width=100>Delivery</th>
+                                                <th lass="text-center" width=100>Payment</th>
                                                 <th class="text-center" width=100>Options</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data as $key => $lorry)
+                                            @foreach ($data as $key => $sale)
                                                 <tr>
                                                     <td  class="text-center">{{ ++$key }}</td>
-                                                    <td>{{ $lorry->name }}</td>
-                                                    <td>{{ $lorry->plate_number }}</td>
-                                                    <td>{{ $lorry->capacity }}</td>
-                                                    <td>{!! getGenStatus('general', $lorry->status, 'badge') !!}</td>
-                                                    <td class="text-center"> <a href="{{ route('lorry.edit', $lorry->id) }}"><i class="bx bx-pencil"></i></a></td>
+                                                    <td>{{ $sale->code }}</td>
+                                                    <td>{{ $sale->date }}</td>
+                                                    <td>{{ $sale->price }}</td>
+                                                    <td>{!! getDelivery('status', $sale->delivery, 'badge') !!}</td>
+                                                    <td>{!! getPayment('status', $sale->payment, 'badge') !!}</td>
+                                                    <td class="text-center"> <a href="{{ route('sale.edit', $sale->id) }}"><i class="bx bx-pencil"></i></a></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

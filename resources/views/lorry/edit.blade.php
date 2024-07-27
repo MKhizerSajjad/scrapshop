@@ -30,8 +30,18 @@
                             <form method="POST" action="{{ route('lorry.update', $lorry->id) }}">
                                 @csrf
                                 @method('PUT')
+
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="name">Name <span class="text text-danger"> *</span></label>
                                             <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" value="{{ $lorry->name }}">
@@ -42,18 +52,40 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label for="number">Plate Number <span class="text text-danger"> *</span></label>
-                                            <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Plate Number" value="{{ $lorry->number }}">
-                                            @error('number')
+                                            <label for="phone">Phone <span class="text text-danger"> *</span></label>
+                                            <input id="phone" name="phone" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Name" value="{{ $lorry->phone }}">
+                                            @error('phone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label for="nric">NRIC <span class="text text-danger"> *</span></label>
+                                            <input id="nric" name="nric" type="text" class="form-control @error('nric') is-invalid @enderror" placeholder="Name" value="{{ $lorry->nric }}">
+                                            @error('nric')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label for="plate_number">Plate Number <span class="text text-danger"> *</span></label>
+                                            <input id="plate_number" name="plate_number" type="text" class="form-control @error('plate_number') is-invalid @enderror" placeholder="Plate Number" value="{{ $lorry->plate_number }}">
+                                            @error('plate_number')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="capacity">Capacity <span class="text text-danger"> *</span></label>
                                             <input id="capacity" name="capacity" type="number" step="any" class="form-control capacityl @error('capacity') is-invalid @enderror" placeholder="Capacity" value="{{ $lorry->capacity }}">
@@ -64,7 +96,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="time">Status <span class="text text-danger"> *</span></label>
                                             <select id="lorry_status" name="status" class="form-control">

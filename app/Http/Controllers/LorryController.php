@@ -9,7 +9,7 @@ class LorryController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Lorry::orderBy('number')->paginate(10);
+        $data = Lorry::orderBy('plate_number')->paginate(10);
 
         return view('lorry.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
@@ -24,15 +24,20 @@ class LorryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:200',
+            'phone' => 'required',
+            'nric' => 'required',
+            'plate_number' => 'required',
             'capacity' => 'required',
-            'number' => 'required',
+            'status' => 'required',
         ]);
 
         $data = [
             'status' => $request->status ?? 1,
             'name' => $request->name,
+            'phone' => $request->phone,
+            'nric' => $request->nric,
+            'plate_number' => $request->plate_number,
             'capacity' => $request->capacity,
-            'number' => $request->number,
             'detail' => $request->detail,
         ];
 
@@ -64,15 +69,20 @@ class LorryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:200',
+            'phone' => 'required',
+            'nric' => 'required',
+            'plate_number' => 'required',
             'capacity' => 'required',
-            'number' => 'required',
+            'status' => 'required',
         ]);
 
         $data = [
             'status' => $request->status ?? 1,
             'name' => $request->name,
+            'phone' => $request->phone,
+            'nric' => $request->nric,
+            'plate_number' => $request->plate_number,
             'capacity' => $request->capacity,
-            'number' => $request->number,
             'detail' => $request->detail,
         ];
 

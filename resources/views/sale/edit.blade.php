@@ -27,14 +27,14 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Edit Purchase</h4>
-                            <form method="POST" action="{{ route('purchase.update', $purchase->id) }}">
+                            <form method="POST" action="{{ route('sale.update', $sale->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="number">Searial Number <span class="text text-danger"> *</span></label>
-                                            <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Serial Number" value="#{{ $purchase->code }}" readonly>
+                                            <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Serial Number" value="#{{ $sale->code }}" readonly>
                                             @error('number')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                                     <div class="col-sm-6">
                                         <div class="mb-3">
                                             <label for="date">Date <span class="text text-danger"> *</span></label>
-                                            <input id="date" name="date" type="date" class="form-control @error('date') is-invalid @enderror" placeholder="Date" value="{{ $purchase->date }}">
+                                            <input id="date" name="date" type="date" class="form-control @error('date') is-invalid @enderror" placeholder="Date" value="{{ $sale->date }}">
                                             @error('date')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
                                             <select id="delivery_status" name="delivery" class="form-control">
                                                 <option value="">Select Delivery Status </option>
                                                 @foreach (getDelivery('status') as $key => $status)
-                                                    <option value="{{ ++$key }}" @if($key == $purchase->payment) selected @endif>{{ $status }}</option>
+                                                    <option value="{{ ++$key }}" @if($key == $sale->payment) selected @endif>{{ $status }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -70,7 +70,7 @@
                                             <select id="payment_status" name="payment" class="form-control">
                                                 <option value="">Select Payment Status </option>
                                                 @foreach (getPayment('status') as $key => $status)
-                                                    <option value="{{ ++$key }}" @if($key == $purchase->delivery) selected @endif>{{ $status }}</option>
+                                                    <option value="{{ ++$key }}" @if($key == $sale->delivery) selected @endif>{{ $status }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -78,7 +78,7 @@
                                     <div class="col-sm-12">
                                         <div class="mb-3">
                                             <label for="detail">Detail </label>
-                                            <textarea id="detail" name="detail" rows="2" class="form-control" placeholder="Detail">{{ $purchase->detail }}</textarea>
+                                            <textarea id="detail" name="detail" rows="2" class="form-control" placeholder="Detail">{{ $sale->detail }}</textarea>
                                         </div>
                                     </div>
 
@@ -111,7 +111,7 @@
                                                             <div class="mb-3 col-lg-1">
                                                             </div>
                                                         </div>
-                                                        @foreach ($purchase->materials as $material)
+                                                        @foreach ($sale->materials as $material)
                                                             @php $totalQty += $material->qty; @endphp
                                                             <div data-repeater-item class="row materialTemplateRow">
                                                                 <div class="mb-3 col-lg-5">
@@ -151,7 +151,7 @@
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <label>Total Price:</label>
-                                                                <input type="number" name="total_price" class="form-control price" id="totalPrice" value="{{ $purchase->price }}" readonly/>
+                                                                <input type="number" name="total_price" class="form-control price" id="totalPrice" value="{{ $sale->price }}" readonly/>
                                                             </div>
                                                             <div class="col-lg-1"></div>
                                                         </div>
@@ -169,7 +169,7 @@
                                                                 <label for="quantity">Ship Quantity</label>
                                                             </div>
                                                         </div>
-                                                        @foreach ($purchase->deliveries as $delivery)
+                                                        @foreach ($sale->deliveries as $delivery)
                                                             @php $totalShipedQty += $delivery->qty; @endphp
                                                             <div data-repeater-item class="row lorryTemplateRow">
                                                                 <div class="mb-3 col-lg-7">
@@ -215,7 +215,7 @@
 
                                     <div class="d-flex justify-content-end gap-2" bis_skin_checked="1">
                                         <button type="submit" class="btn btn-primary waves-effect waves-light w-10">Update</button>
-                                        <a href="{{ route('purchase.index') }}" class="waves-effect waves-light btn btn-secondary"> Cancel</a>
+                                        <a href="{{ route('sale.index') }}" class="waves-effect waves-light btn btn-secondary"> Cancel</a>
                                     </div>
                                 </div>
                             </form>

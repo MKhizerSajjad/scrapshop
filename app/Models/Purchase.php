@@ -13,4 +13,8 @@ class Purchase extends Model
     public function materials() {
         return $this->hasMany(PurchaseMaterial::class);
     }
+
+    public function deliveries() {
+        return $this->hasMany(PurchaseDelivery::class);
+    }
 }

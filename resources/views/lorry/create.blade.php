@@ -27,13 +27,23 @@
                         <div class="card-body">
                             <h4 class="card-title">Add New Lorry</h4>
                             {{-- <p class="card-title-desc">Fill all information below</p> --}}
+
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
                             <form method="POST" action="{{ route('lorry.store') }}">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="name">Name <span class="text text-danger"> *</span></label>
-                                            <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" value="{{ old('nmae') }}">
+                                            <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Name" value="{{ old('name') }}">
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -41,18 +51,40 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label for="number">Plate Number <span class="text text-danger"> *</span></label>
-                                            <input id="number" name="number" type="text" class="form-control @error('number') is-invalid @enderror" placeholder="Plate Number" value="{{ old('number') }}">
-                                            @error('number')
+                                            <label for="phone">Phone <span class="text text-danger"> *</span></label>
+                                            <input id="phone" name="phone" type="phone" step="any" class="form-control phonel @error('phone') is-invalid @enderror" placeholder="Capacity" value="{{ old('phone') }}">
+                                            @error('phone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label for="nric">NRIC <span class="text text-danger"> *</span></label>
+                                            <input id="nric" name="nric" type="number" step="any" class="form-control nricl @error('nric') is-invalid @enderror" placeholder="Capacity" value="{{ old('nric') }}">
+                                            @error('nric')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label for="plate_number">Plate Number <span class="text text-danger"> *</span></label>
+                                            <input id="plate_number" name="plate_number" type="text" class="form-control @error('plate_number') is-invalid @enderror" placeholder="Plate Number" value="{{ old('plate_number') }}">
+                                            @error('plate_number')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="capacity">Capacity <span class="text text-danger"> *</span></label>
                                             <input id="capacity" name="capacity" type="number" step="any" class="form-control capacityl @error('capacity') is-invalid @enderror" placeholder="Capacity" value="{{ old('capacity') }}">
@@ -63,15 +95,20 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="time">Status <span class="text text-danger"> *</span></label>
-                                            <select id="lorry_status" name="status" class="form-control">
+                                            <select id="lorry_status" name="status" class="form-control @error('capacity') is-invalid @enderror">
                                                 <option value="">Select Status </option>
                                                 @foreach (getGenStatus('general') as $key => $priority)
                                                     <option value="{{ ++$key }}">{{ $priority }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-12">

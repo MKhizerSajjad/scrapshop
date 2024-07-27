@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('sale_id')->unsigned();
             $table->bigInteger('material_id');
             $table->bigInteger('qty');
-            $table->decimal('price', 15, 2)->nullable();
+            $table->decimal('unit_price', 15, 2)->nullable();
             $table->timestamps();
 
             $table->foreign('sale_id')->references('id')->on('sales')->onUpdate('CASCADE')->onDelete('CASCADE');

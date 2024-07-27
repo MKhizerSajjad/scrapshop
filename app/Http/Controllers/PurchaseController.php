@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Lorry;
 use App\Models\Purchase;
 use App\Models\PurchaseMaterial;
+use App\Models\PurchaseDelivery;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -20,7 +22,8 @@ class PurchaseController extends Controller
     public function create()
     {
         $code = $this->generateInvoiceCode();
-        return view('purchase.create', compact('code'));
+        $lorries = Lorry::orderBy('number')->where('status', 1)->get();
+        return view('purchase.create', compact('code', 'lorries'));
     }
 
     public function store(Request $request)
@@ -56,6 +59,18 @@ class PurchaseController extends Controller
             }
         }
 
+        for($i=0; $i<count($request->lorry); $i++) {
+            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+                $data = [
+                    'status' => 1,
+                    'purchase_id' => $purchaseId,
+                    'lorry_id' => $request->lorry[$i],
+                    'qty' => $request->ship_quantity[$i],
+                ];
+                PurchaseDelivery::create($data);
+            }
+        }
+
         return redirect()->route('purchase.index')->with('success','Record created successfully');
     }
 
@@ -75,7 +90,8 @@ class PurchaseController extends Controller
 
     public function edit(Purchase $purchase)
     {
-        return view('purchase.edit', compact('purchase'));
+        $lorries = Lorry::orderBy('number')->where('status', 1)->get();
+        return view('purchase.edit', compact('purchase', 'lorries'));
     }
 
     public function update(Request $request, Purchase $purchase)
@@ -95,6 +111,7 @@ class PurchaseController extends Controller
 
         Purchase::find($purchaseId)->update($data);
 
+        PurchaseMaterial::where('purchase_id', $purchaseId)->delete();
         for ($i = 0; $i < count($request->material); $i++) {
             if (isset($request->material[$i]) && isset($request->quantity[$i]) && isset($request->unit_price[$i])) {
                 PurchaseMaterial::updateOrCreate(
@@ -107,6 +124,19 @@ class PurchaseController extends Controller
                         'unit_price' => $request->unit_price[$i],
                     ]
                 );
+            }
+        }
+
+        PurchaseDelivery::where('purchase_id', $purchaseId)->delete();
+        for($i=0; $i<count($request->lorry); $i++) {
+            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+                $data = [
+                    'status' => 1,
+                    'purchase_id' => $purchaseId,
+                    'lorry_id' => $request->lorry[$i],
+                    'qty' => $request->ship_quantity[$i],
+                ];
+                PurchaseDelivery::create($data);
             }
         }
 

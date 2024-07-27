@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sale_deliveries', function (Blueprint $table) {
+        Schema::create('purchase_deliveries', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('status')->defaukt(1);
-            $table->bigInteger('sale_id')->unsigned();
+            $table->bigInteger('purchase_id')->unsigned();
             $table->bigInteger('lorry_id')->unsigned();
             $table->bigInteger('qty');
             $table->decimal('worth', 15, 2)->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
 
-            $table->foreign('sale_id')->references('id')->on('sales')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign('purchase_id')->references('id')->on('purchases')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('lorry_id')->references('id')->on('lorries')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sale_deliveries');
+        Schema::dropIfExists('purchase_deliveries');
     }
 };

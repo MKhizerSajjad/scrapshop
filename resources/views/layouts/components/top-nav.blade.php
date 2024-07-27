@@ -28,6 +28,13 @@
                             <span key="t-aitool">Purchases</span>
                         </a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="{{route('sale.index')}}" id="topnav-dashboard" role="button"
+                        >
+                            <i class="bx bx-receipt me-1"></i>
+                            <span key="t-aitool">Sales</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

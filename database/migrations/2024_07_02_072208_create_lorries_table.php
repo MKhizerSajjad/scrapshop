@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('status');
             $table->string('name');
+            $table->string('nric')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('plate_number');
             $table->string('capacity');
-            $table->string('number');
             $table->text('detail');
             $table->timestamps();
         });

@@ -9,4 +9,12 @@ class Sale extends Model
 {
     use HasFactory;
     protected $guarded;
+
+    public function materials() {
+        return $this->hasMany(SaleMaterial::class);
+    }
+
+    public function deliveries() {
+        return $this->hasMany(SaleDelivery::class);
+    }
 }
