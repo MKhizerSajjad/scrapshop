@@ -27,16 +27,6 @@
                         <div class="card-body">
                             <h4 class="card-title">Add New Lorry</h4>
                             {{-- <p class="card-title-desc">Fill all information below</p> --}}
-
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
                             <form method="POST" action="{{ route('lorry.store') }}">
                                 @csrf
                                 <div class="row">
@@ -54,7 +44,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="phone">Phone <span class="text text-danger"> *</span></label>
-                                            <input id="phone" name="phone" type="phone" step="any" class="form-control phonel @error('phone') is-invalid @enderror" placeholder="Capacity" value="{{ old('phone') }}">
+                                            <input id="phone" name="phone" type="phone" step="any" class="form-control phonel @error('phone') is-invalid @enderror" placeholder="Phone" value="{{ old('phone') }}">
                                             @error('phone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -65,7 +55,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="nric">NRIC <span class="text text-danger"> *</span></label>
-                                            <input id="nric" name="nric" type="number" step="any" class="form-control nricl @error('nric') is-invalid @enderror" placeholder="Capacity" value="{{ old('nric') }}">
+                                            <input id="nric" name="nric" type="number" step="any" class="form-control nricl @error('nric') is-invalid @enderror" placeholder="NRIC" value="{{ old('nric') }}">
                                             @error('nric')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

@@ -22,7 +22,7 @@ class PurchaseController extends Controller
     public function create()
     {
         $code = $this->generateInvoiceCode();
-        $lorries = Lorry::orderBy('number')->where('status', 1)->get();
+        $lorries = Lorry::orderBy('plate_number')->where('status', 1)->get();
         return view('purchase.create', compact('code', 'lorries'));
     }
 
@@ -90,7 +90,7 @@ class PurchaseController extends Controller
 
     public function edit(Purchase $purchase)
     {
-        $lorries = Lorry::orderBy('number')->where('status', 1)->get();
+        $lorries = Lorry::orderBy('plate_number')->where('status', 1)->get();
         return view('purchase.edit', compact('purchase', 'lorries'));
     }
 

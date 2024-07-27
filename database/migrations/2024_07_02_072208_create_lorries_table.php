@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('plate_number');
             $table->string('capacity');
-            $table->text('detail');
+            $table->text('detail')->nullable();
             $table->timestamps();
         });
     }

@@ -30,16 +30,6 @@
                             <form method="POST" action="{{ route('lorry.update', $lorry->id) }}">
                                 @csrf
                                 @method('PUT')
-
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="mb-3">
@@ -55,7 +45,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="phone">Phone <span class="text text-danger"> *</span></label>
-                                            <input id="phone" name="phone" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Name" value="{{ $lorry->phone }}">
+                                            <input id="phone" name="phone" type="text" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone" value="{{ $lorry->phone }}">
                                             @error('phone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -66,7 +56,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="nric">NRIC <span class="text text-danger"> *</span></label>
-                                            <input id="nric" name="nric" type="text" class="form-control @error('nric') is-invalid @enderror" placeholder="Name" value="{{ $lorry->nric }}">
+                                            <input id="nric" name="nric" type="text" class="form-control @error('nric') is-invalid @enderror" placeholder="NRIC" value="{{ $lorry->nric }}">
                                             @error('nric')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
