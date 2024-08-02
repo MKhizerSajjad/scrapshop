@@ -25,7 +25,7 @@ class LorryController extends Controller
         $this->validate($request, [
             'name' => 'required|max:200',
             'phone' => 'required',
-            'nric' => 'required',
+            'nric' => 'required|numeric',
             'plate_number' => 'required',
             'capacity' => 'required',
             'status' => 'required',
@@ -70,7 +70,7 @@ class LorryController extends Controller
         $this->validate($request, [
             'name' => 'required|max:200',
             'phone' => 'required',
-            'nric' => 'required',
+            'nric' => 'required|numeric',
             'plate_number' => 'required',
             'capacity' => 'required',
             'status' => 'required',

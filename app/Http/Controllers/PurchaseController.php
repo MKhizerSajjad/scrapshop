@@ -13,7 +13,7 @@ class PurchaseController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Purchase::with('materials')->orderBy('code')->paginate(10);
+        $data = Purchase::with('materials')->orderByDesc('code')->paginate(10);
 
         return view('purchase.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
@@ -60,12 +60,12 @@ class PurchaseController extends Controller
         }
 
         for($i=0; $i<count($request->lorry); $i++) {
-            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+            if(isset($request->lorry[$i])) { // && isset($request->ship_quantity[$i])
                 $data = [
                     'status' => 1,
                     'purchase_id' => $purchaseId,
                     'lorry_id' => $request->lorry[$i],
-                    'qty' => $request->ship_quantity[$i],
+                    'qty' => 0, //$request->ship_quantity[$i],
                 ];
                 PurchaseDelivery::create($data);
             }
@@ -134,7 +134,7 @@ class PurchaseController extends Controller
                     'status' => 1,
                     'purchase_id' => $purchaseId,
                     'lorry_id' => $request->lorry[$i],
-                    'qty' => $request->ship_quantity[$i],
+                    'qty' => 0, //$request->ship_quantity[$i],
                 ];
                 PurchaseDelivery::create($data);
             }

@@ -126,7 +126,7 @@
                                                                     <input type="number" name="quantity[]" class="form-control quantity" value="{{$material->qty}}" placeholder="Enter Quantity" required/>
                                                                 </div>
                                                                 <div class="mb-3 col-lg-2">
-                                                                    <input type="number" name="unit_price[]" class="form-control unit_price" value="{{$material->unit_price}}" placeholder="Enter Unit Price" required/>
+                                                                    <input type="number" name="unit_price[]" step="any" class="form-control unit_price" value="{{$material->unit_price}}" placeholder="Enter Unit Price" required/>
                                                                 </div>
                                                                 <div class="mb-3 col-lg-2">
                                                                     <input type="number" name="price[]" class="form-control price" value="{{$material->qty * $material->unit_price}}" placeholder="Enter Price" readonly/>
@@ -162,27 +162,27 @@
                                                     <div data-repeater-list="group-b">
                                                         <!-- Initial template for a single row -->
                                                         <div class="row">
-                                                            <div class="mb-3 col-lg-7">
+                                                            <div class="mb-3 col-lg-11">
                                                                 <label for="lorry">Lorry</label>
                                                             </div>
-                                                            <div class="mb-3 col-lg-4">
+                                                            {{-- <div class="mb-3 col-lg-4">
                                                                 <label for="quantity">Ship Quantity</label>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
                                                         @foreach ($purchase->deliveries as $delivery)
                                                             @php $totalShipedQty += $delivery->qty; @endphp
                                                             <div data-repeater-item class="row lorryTemplateRow">
-                                                                <div class="mb-3 col-lg-7">
+                                                                <div class="mb-3 col-lg-11">
                                                                     <select id="lorry" name="lorry[]" class="form-control" required>
                                                                         <option value="">Select Lorry </option>
                                                                         @foreach ($lorries as $key => $lorry)
-                                                                            <option value="{{ $lorry->id }}" @if($lorry->id == $delivery->lorry_id) selected @endif >{{ $lorry->name }}</option>
+                                                                            <option value="{{ $lorry->id }}" @if($lorry->id == $delivery->lorry_id) selected @endif >{{ $lorry->plate_number }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="mb-3 col-lg-4">
+                                                                {{-- <div class="mb-3 col-lg-4">
                                                                     <input type="number" name="ship_quantity[]" class="form-control ship_quantity" placeholder="Enter Quantity" value="{{$delivery->qty}}" required/>
-                                                                </div>
+                                                                </div> --}}
                                                                 <div class="col-lg-1">
                                                                     <button type="button" class="btn btn-danger remove-lorry-btn">
                                                                         <i class="bx bx-minus-circle me-1"></i>
@@ -199,7 +199,7 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <div class="mt-3">
+                                                    {{-- <div class="mt-3">
                                                         <div class="row">
                                                             <div class="col-lg-3 offset-lg-9">
                                                                 <label>Total Ship Quantity:</label>
@@ -207,7 +207,7 @@
                                                             </div>
                                                             <div class="col-lg-1"></div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>

@@ -55,7 +55,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label for="nric">NRIC <span class="text text-danger"> *</span></label>
-                                            <input id="nric" name="nric" type="number" step="any" class="form-control nricl @error('nric') is-invalid @enderror" placeholder="NRIC" value="{{ old('nric') }}">
+                                            <input id="nric" name="nric" type="text" step="any" class="form-control nricl @error('nric') is-invalid @enderror" placeholder="NRIC" value="{{ old('nric') }}">
                                             @error('nric')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

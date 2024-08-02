@@ -13,7 +13,7 @@ class SaleController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Sale::with('materials')->orderBy('code')->paginate(10);
+        $data = Sale::with('materials')->orderByDesc('code')->paginate(10);
 
         return view('sale.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 10);
@@ -43,14 +43,14 @@ class SaleController extends Controller
             'detail' => $request->detail,
         ];
 
-        $purchase = Sale::create($data);
+        $sale = Sale::create($data);
 
-        $purchaseId = $purchase->id;
+        $saleId = $sale->id;
 
         for($i=0; $i<count($request->material); $i++) {
             if(isset($request->material[$i]) && isset($request->quantity[$i]) && isset($request->unit_price[$i])) {
                 $data = [
-                    'sale_id' => $purchaseId,
+                    'sale_id' => $saleId,
                     'material_id' => $request->material[$i],
                     'qty' => $request->quantity[$i],
                     'unit_price' => $request->unit_price[$i],
@@ -60,12 +60,12 @@ class SaleController extends Controller
         }
 
         for($i=0; $i<count($request->lorry); $i++) {
-            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+            if(isset($request->lorry[$i])) { // && isset($request->ship_quantity[$i])
                 $data = [
                     'status' => 1,
-                    'sale_id' => $purchaseId,
+                    'sale_id' => $saleId,
                     'lorry_id' => $request->lorry[$i],
-                    'qty' => $request->ship_quantity[$i],
+                    'qty' => 0, //$request->ship_quantity[$i]
                 ];
                 SaleDelivery::create($data);
             }
@@ -129,12 +129,12 @@ class SaleController extends Controller
 
         SaleDelivery::where('sale_id', $saleId)->delete();
         for($i=0; $i<count($request->lorry); $i++) {
-            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+            if(isset($request->lorry[$i])) { // && isset($request->ship_quantity[$i])
                 $data = [
                     'status' => 1,
                     'sale_id' => $saleId,
                     'lorry_id' => $request->lorry[$i],
-                    'qty' => $request->ship_quantity[$i],
+                    'qty' => 0, //$request->ship_quantity[$i],
                 ];
                 SaleDelivery::create($data);
             }
