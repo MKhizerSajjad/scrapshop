@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\LorryController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ReportingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
     Route::resource('lorry', LorryController::class)->names('lorry');
+    Route::get('purchase/report', [ReportingController::class, 'purchase'])->name('purchase.report');
     Route::resource('purchase', PurchaseController::class)->names('purchase');
+    Route::get('sale/report', [ReportingController::class, 'sale'])->name('sale.report');
     Route::resource('sale', SaleController::class)->names('sale');
     Route::resource('data', DataController::class)->names('data');
     Route::resource('contacts', ContactsController::class)->names('contacts');

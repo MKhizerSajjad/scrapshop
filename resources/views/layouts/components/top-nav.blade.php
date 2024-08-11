@@ -35,6 +35,20 @@
                             <span key="t-aitool">Sales</span>
                         </a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="{{route('sale.index')}}" id="topnav-dashboard" role="button"
+                        >
+                            <i class="bx bx-receipt me-1"></i>
+                            <span key="t-aitool">Reports</span>
+                            <div class="arrow-down" bis_skin_checked="1"></div>
+                        </a>
+                        <div class="dropdown-menu" bis_skin_checked="1">
+                            <div class="dropdown" bis_skin_checked="1">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{route('purchase.report')}}">Purchase </a>
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="{{route('sale.report')}}">Sale </a>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
