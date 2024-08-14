@@ -59,15 +59,17 @@ class PurchaseController extends Controller
             }
         }
 
-        for($i=0; $i<count($request->lorry); $i++) {
-            if(isset($request->lorry[$i])) { // && isset($request->ship_quantity[$i])
-                $data = [
-                    'status' => 1,
-                    'purchase_id' => $purchaseId,
-                    'lorry_id' => $request->lorry[$i],
-                    'qty' => 0, //$request->ship_quantity[$i],
-                ];
-                PurchaseDelivery::create($data);
+        if(isset($request->lorry)) {
+            for($i=0; $i<count($request->lorry); $i++) {
+                if(isset($request->lorry[$i])) { // && isset($request->ship_quantity[$i])
+                    $data = [
+                        'status' => 1,
+                        'purchase_id' => $purchaseId,
+                        'lorry_id' => $request->lorry[$i],
+                        'qty' => 0, //$request->ship_quantity[$i],
+                    ];
+                    PurchaseDelivery::create($data);
+                }
             }
         }
 
@@ -128,15 +130,18 @@ class PurchaseController extends Controller
         }
 
         PurchaseDelivery::where('purchase_id', $purchaseId)->delete();
-        for($i=0; $i<count($request->lorry); $i++) {
-            if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
-                $data = [
-                    'status' => 1,
-                    'purchase_id' => $purchaseId,
-                    'lorry_id' => $request->lorry[$i],
-                    'qty' => 0, //$request->ship_quantity[$i],
-                ];
-                PurchaseDelivery::create($data);
+
+        if(isset($request->lorry)) {
+            for($i=0; $i<count($request->lorry); $i++) {
+                if(isset($request->lorry[$i]) && isset($request->ship_quantity[$i])) {
+                    $data = [
+                        'status' => 1,
+                        'purchase_id' => $purchaseId,
+                        'lorry_id' => $request->lorry[$i],
+                        'qty' => 0, //$request->ship_quantity[$i],
+                    ];
+                    PurchaseDelivery::create($data);
+                }
             }
         }
 

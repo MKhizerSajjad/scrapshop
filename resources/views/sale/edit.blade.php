@@ -111,7 +111,7 @@
                                                             <div class="mb-3 col-lg-1">
                                                             </div>
                                                         </div>
-                                                        @foreach ($sale->materials as $material)
+                                                        @foreach ($sale->materials as $materialIndex => $material)
                                                             @php $totalQty += $material->qty; @endphp
                                                             <div data-repeater-item class="row materialTemplateRow">
                                                                 <div class="mb-3 col-lg-5">
@@ -131,8 +131,10 @@
                                                                 <div class="mb-3 col-lg-2">
                                                                     <input type="number" name="price[]" class="form-control price" value="{{$material->qty * $material->unit_price}}" placeholder="Enter Price" readonly/>
                                                                 </div>
-                                                                <div class="col-lg-1">
-                                                                    <button type="button" class="btn btn-danger remove-btn">-</button>
+                                                                <div class="col-lg-1" id="removeMatrial">
+                                                                    @if ($materialIndex != 0)
+                                                                        <button type="button" class="btn btn-danger remove-btn">-</button>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         @endforeach
@@ -169,7 +171,7 @@
                                                                 <label for="quantity">Ship Quantity</label>
                                                             </div> --}}
                                                         </div>
-                                                        @foreach ($sale->deliveries as $delivery)
+                                                        @foreach ($sale->deliveries as $delIndex => $delivery)
                                                             @php $totalShipedQty += $delivery->qty; @endphp
                                                             <div data-repeater-item class="row lorryTemplateRow">
                                                                 <div class="mb-3 col-lg-11">
@@ -183,10 +185,12 @@
                                                                 {{-- <div class="mb-3 col-lg-4">
                                                                     <input type="number" name="ship_quantity[]" class="form-control ship_quantity" placeholder="Enter Quantity" value="{{$delivery->qty}}" required/>
                                                                 </div> --}}
-                                                                <div class="col-lg-1">
-                                                                    <button type="button" class="btn btn-danger remove-lorry-btn">
-                                                                        <i class="bx bx-minus-circle me-1"></i>
-                                                                    </button>
+                                                                <div class="col-lg-1" id="removeLorry">
+                                                                    @if ($delIndex != 0)
+                                                                        <button type="button" class="btn btn-danger remove-lorry-btn">
+                                                                            <i class="bx bx-minus-circle me-1"></i>
+                                                                        </button>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         @endforeach
@@ -237,6 +241,9 @@
             var template = $('.materialTemplateRow').first().clone();
             template.find('input[type="number"]').val(''); // Clear input values
             template.appendTo('[data-repeater-list="group-a"]');
+             // Add a remove button to the new row
+            template.find('#removeMatrial').html('<button type="button" class="btn btn-danger remove-btn"><i class="bx bx-minus-circle me-1"></i></button>');
+
             bindMaterialRowEvents(template); // Bind events to new row
             calculateTotalPrice();
         }
@@ -303,6 +310,9 @@
             var template = $('.lorryTemplateRow').first().clone();
             template.find('input[type="number"]').val(''); // Clear input values
             template.appendTo('[data-repeater-list="group-b"]');
+            // Add a remove button to the new row
+            template.find('#removeLorry').html('<button type="button" class="btn btn-danger remove-lorry-btn"><i class="bx bx-minus-circle me-1"></i></button>');
+
             bindLorryRowEvents(template); // Bind events to new row
             calculateShipQty();
         }

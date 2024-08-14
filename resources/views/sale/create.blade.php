@@ -122,10 +122,10 @@
                                                             <div class="mb-3 col-lg-2">
                                                                 <input type="number" name="price[]" class="form-control price" placeholder="Enter Price" readonly/>
                                                             </div>
-                                                            <div class="col-lg-1">
-                                                                <button type="button" class="btn btn-danger remove-btn">
+                                                            <div class="col-lg-1" id="removeMatrial">
+                                                                {{-- <button type="button" class="btn btn-danger remove-btn">
                                                                     <i class="bx bx-minus-circle me-1"></i>
-                                                                </button>
+                                                                </button> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -174,10 +174,10 @@
                                                             {{-- <div class="mb-3 col-lg-4">
                                                                 <input type="number" name="ship_quantity[]" class="form-control ship_quantity" placeholder="Enter Quantity" required/>
                                                             </div> --}}
-                                                            <div class="col-lg-1">
-                                                                <button type="button" class="btn btn-danger remove-lorry-btn">
+                                                            <div class="col-lg-1" id="removeLorry">
+                                                                {{-- <button type="button" class="btn btn-danger remove-lorry-btn">
                                                                     <i class="bx bx-minus-circle me-1"></i>
-                                                                </button>
+                                                                </button> --}}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -225,6 +225,9 @@
             var template = $('.materialTemplateRow').first().clone();
             template.find('input[type="number"]').val(''); // Clear input values
             template.appendTo('[data-repeater-list="group-a"]');
+             // Add a remove button to the new row
+            template.find('#removeMatrial').html('<button type="button" class="btn btn-danger remove-btn"><i class="bx bx-minus-circle me-1"></i></button>');
+
             bindMaterialRowEvents(template); // Bind events to new row
             calculateTotalPrice();
         }
@@ -291,6 +294,9 @@
             var template = $('.lorryTemplateRow').first().clone();
             template.find('input[type="number"]').val(''); // Clear input values
             template.appendTo('[data-repeater-list="group-b"]');
+            // Add a remove button to the new row
+            template.find('#removeLorry').html('<button type="button" class="btn btn-danger remove-lorry-btn"><i class="bx bx-minus-circle me-1"></i></button>');
+
             bindLorryRowEvents(template); // Bind events to new row
             calculateShipQty();
         }
